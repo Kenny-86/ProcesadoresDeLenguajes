@@ -65,10 +65,8 @@ public class AnalizadorLexico {
 	}
 
 	private void escribirTexto(String string) {
-		try{//try with resourcess
-			FileWriter escritor =new FileWriter(fichero, true);
+		try(FileWriter escritor =new FileWriter(fichero, true)){//try with resourcess
 			escritor.write(string+"\n");//concatena el token y cambia de linea
-			escritor.close();
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
