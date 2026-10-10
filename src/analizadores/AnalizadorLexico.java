@@ -21,17 +21,17 @@ public class AnalizadorLexico {
 		this.fichero=fichero;
 	}
 	//devuelve una lista con cada caracter del fichero de texto
-	public ArrayList<String> lector( ) {
+	public ArrayList<Character> lector( ) {
 		File fichero = new File(direccion);
-		ArrayList<String> caracteres= new ArrayList<String>();
+		ArrayList<Character> caracteres= new ArrayList<Character>();
 		try (Scanner reader = new Scanner(fichero)) {//try with resources
 			while (reader.hasNextLine()) {
 				String data = reader.nextLine(); //leemos de linea en liena
 				for (int i=0; i<data.length(); i++) {
 					char car = data.charAt(i);//transformamos en caracter
-					caracteres.addLast(""+car);
+					caracteres.addLast(car);
 				}
-				caracteres.addLast("");//añadimos el salto de linea que no se lee explicitamente
+				caracteres.addLast(' ');//añadimos el salto de linea que no se lee explicitamente
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println("Fichero no encontrado.");
@@ -75,11 +75,7 @@ public class AnalizadorLexico {
 //pedo pedet
 
 	public static void main (String[] args) {
-		AnalizadorLexico anl = new AnalizadorLexico("texto.txt", "resultado.txt");
-		ArrayList<String> texto = anl.lector();
-		for(String car: texto ) {
-			anl.escribirTexto(car);		
-		}
+		
 	}
 }
 
