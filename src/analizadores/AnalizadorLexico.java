@@ -54,7 +54,7 @@ public class AnalizadorLexico {
 		escribirTexto("< id, "+posTS+" >");
 		lexema="";
 	}
-
+ 
 	public void tokenStringCadCAr() {
 		lexema="";
 		escribirTexto("< cadena, "+lexema+" >");
@@ -65,20 +65,23 @@ public class AnalizadorLexico {
 	}
 
 	private void escribirTexto(String string) {
-		try(FileWriter escritor =new FileWriter(fichero, true)){//try with resourcess
+		try{//try with resourcess
+			FileWriter escritor =new FileWriter(fichero, true);
 			escritor.write(string+"\n");//concatena el token y cambia de linea
+			escritor.close();
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
 
 	}
-
+//pedo pedet
 
 	public static void main (String[] args) {
 		AnalizadorLexico anl = new AnalizadorLexico("texto.txt", "resultado.txt");
 		ArrayList<String> texto = anl.lector();
 		for(String car: texto ) {
 			anl.escribirTexto(car);
+			
 		}
 	}
 
