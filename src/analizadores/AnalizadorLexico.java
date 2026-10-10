@@ -90,7 +90,7 @@ public class AnalizadorLexico {
     }
 
     public void concatenarCaracteres(char caracter) {
-        palabra.concat(""+caracter);
+       lexema.concat(""+caracter);
     }
 //pedo pedet
 
