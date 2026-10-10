@@ -13,12 +13,14 @@ public class AnalizadorLexico {
 	private int entero;
 	private float real;
 	private String fichero;
+	private int contadorDecimal;
 	public AnalizadorLexico(String dir, String fichero) {
 		direccion=dir;
 		lexema="";
 		entero=0;
 		real=0;
 		this.fichero=fichero;
+		contadorDecimal=0;
 	}
 	//devuelve una lista con cada caracter del fichero de texto
 	public ArrayList<Character> lector( ) {
@@ -49,6 +51,7 @@ public class AnalizadorLexico {
 		escribirTexto("< real, "+real+" >");
 		real=0;
 		entero=0;
+		contadorDecimal=0;
 	}
 
 	public void tokenStringId(int posTS) {
