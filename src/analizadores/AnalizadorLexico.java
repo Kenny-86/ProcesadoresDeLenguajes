@@ -92,7 +92,7 @@ public class AnalizadorLexico {
     public void concatenarCaracteres(char caracter) {
        lexema.concat(""+caracter);
     }
-//pedo pedet
+
 
 	public static void main (String[] args) {
 	}
