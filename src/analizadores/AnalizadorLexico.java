@@ -13,12 +13,14 @@ public class AnalizadorLexico {
 	private int entero;
 	private float real;
 	private String fichero;
+	private int contadorDecimal;
 	public AnalizadorLexico(String dir, String fichero) {
 		direccion=dir;
 		lexema="";
 		entero=0;
 		real=0;
 		this.fichero=fichero;
+		contadorDecimal=0;
 	}
 	//devuelve una lista con cada caracter del fichero de texto
 	public ArrayList<Character> lector( ) {
@@ -48,6 +50,8 @@ public class AnalizadorLexico {
 	public void tokenStringReal() {
 		escribirTexto("< real, "+real+" >");
 		real=0;
+		entero=0;
+		contadorDecimal=0;
 	}
 
 	public void tokenStringId(int posTS) {
@@ -72,10 +76,25 @@ public class AnalizadorLexico {
 		}
 
 	}
+	
+	  public void concatenarNumeroEnt(char num) {
+        int res=(int)num;
+        entero=entero*10+res;
+    }
+
+    public void concatenarNumeroDecimal(char num) {
+        float res=(int)num;
+        contadorDecimal-=1;
+        res=res*(float)Math.pow(10, contadorDecimal);
+        real=real+res;
+    }
+
+    public void concatenarCaracteres(char caracter) {
+        palabra.concat(""+caracter);
+    }
 //pedo pedet
 
 	public static void main (String[] args) {
-		
 	}
 }
 
