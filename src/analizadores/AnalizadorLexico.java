@@ -48,6 +48,7 @@ public class AnalizadorLexico {
 	public void tokenStringReal() {
 		escribirTexto("< real, "+real+" >");
 		real=0;
+		entero=0;
 	}
 
 	public void tokenStringId(int posTS) {
@@ -72,10 +73,25 @@ public class AnalizadorLexico {
 		}
 
 	}
+	
+	  public void concatenarNumeroEnt(char num) {
+        int res=(int)num;
+        entero=entero*10+res;
+    }
+
+    public void concatenarNumeroDecimal(char num) {
+        float res=(int)num;
+        contadorDecimal-=1;
+        res=res*(float)Math.pow(10, contadorDecimal);
+        real=real+res;
+    }
+
+    public void concatenarCaracteres(char caracter) {
+        palabra.concat(""+caracter);
+    }
 //pedo pedet
 
 	public static void main (String[] args) {
-		
 	}
 }
 
