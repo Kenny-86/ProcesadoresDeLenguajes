@@ -1,3 +1,4 @@
+//puto el que lo lea
 package analizadores;
 import java.io.File;                  // Para manejar el archivo
 import java.io.FileNotFoundException; 
@@ -44,7 +45,6 @@ public class AnalizadorLexico {
 		entero=0;
 	}
 
-
 	public void tokenStringReal() {
 		escribirTexto("< real, "+real+" >");
 		real=0;
@@ -80,10 +80,8 @@ public class AnalizadorLexico {
 		AnalizadorLexico anl = new AnalizadorLexico("texto.txt", "resultado.txt");
 		ArrayList<String> texto = anl.lector();
 		for(String car: texto ) {
-			anl.escribirTexto(car);
-			
+			anl.escribirTexto(car);		
 		}
 	}
-
 }
 
