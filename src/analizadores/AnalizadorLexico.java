@@ -146,6 +146,7 @@ public class AnalizadorLexico {
        lexema.concat(""+caracter);
     }
 
+
 	public static void main (String[] args) {
 		
 		
