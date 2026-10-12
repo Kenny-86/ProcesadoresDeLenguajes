@@ -198,12 +198,12 @@ public class AnalizadorLexico {
 	}
 	
 	public void concatenarNumeroEnt(char num) {
-        int res=num.getNumericValue();
+        int res=(int)num-48;
         entero=entero*10+res;
     }
 
     public void concatenarNumeroDecimal(char num) {
-        float res=num.getNumericValue();
+        float res=(int)num-48;
         contadorDecimal-=1;
         res=res*(float)Math.pow(10, contadorDecimal);
         real=real+res;
