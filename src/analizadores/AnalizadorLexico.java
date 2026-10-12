@@ -56,7 +56,7 @@ public class AnalizadorLexico {
 				{"L;GT2","D;L","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2","GT2","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2"},
 				{"C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L","E3","L;GT10","C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L"}, 
 				{"L;GT9","L;GT9","L;GT9","L;GT9","L;GT9","L;GT9","L;GT8","L;GT9","L;GT9","GT9","L;GT9","L;GT9","L;GT9","L;GT9","L;GT9","L;GT9","L;GT9","L;GT9","L;GT9","L;GT9"},
-				{"L;GT4","L;GT4","L;GT5","L;GT4","L;GT4","L;GT4","L;GT4","L;GT4","L;GT4","GT4","L;GT4","L;GT4","L;GT4","L;GT4","L;GT4","L;GT4","L;GT4","L;GT4","L;GT4","L;GT4"},
+				{"L;GT4","L;GT4","L;GT4","L;GT5","L;GT4","L;GT4","L;GT4","L;GT4","L;GT4","GT4","L;GT4","L;GT4","L;GT4","L;GT4","L;GT4","L;GT4","L;GT4","L;GT4","L;GT4","L;GT4"},
 				{"E2","E2","E2","E2","E2","L;GT7","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2"},
 				{"E3","E3","E3","E3","E3","E3","E3","L","E3","E3","E3","E3","E3","E3","E3","E3","E3","E3","E3","E3"},
 				{"L","L","L","L","L","L","L","L","L","E3","L","L","L","L","L","L","L","L","L","L"},
