@@ -285,6 +285,7 @@ public class AnalizadorLexico {
 	public void ejecutarAcciones(String accion, char caracter, GestorErrores gestorErr) {
 		if (accion.isEmpty()) {
 			estado = 0;
+			return;
 		}
 		String[] listaAcciones = accion.split(";");
 		for (String accionPosible : listaAcciones) {
