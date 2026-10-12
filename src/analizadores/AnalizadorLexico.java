@@ -179,7 +179,6 @@ public class AnalizadorLexico {
 	public void tokenStringReal() {
 		escribirTexto("< real, "+real+" >");
 		real=0;
-		entero=0;
 		contadorDecimal=0;
 	}
 
@@ -189,12 +188,13 @@ public class AnalizadorLexico {
 	}
  
 	public void tokenStringCadCAr() {
-		lexema="";
 		escribirTexto("< cadena, "+lexema+" >");
+		lexema="";
 	}
 
 	public void tokenStringPalabraReservada(String lexema){
 		escribirTexto("< "+ lexema + ", ->");
+		lexema="";
 	}
 	
 	public void concatenarNumeroEnt(char num) {
@@ -210,7 +210,8 @@ public class AnalizadorLexico {
     }
 
 	public void inicioReal(){
-		real=(float)real;
+		real=(float)entero;
+		entero=0;
 	}
 
     public void concatenarCaracteres(char caracter) {
