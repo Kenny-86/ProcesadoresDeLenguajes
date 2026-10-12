@@ -29,7 +29,7 @@ public class AnalizadorLexico {
 		{13, 2, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 3, 13},
 		{0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{14,4,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14},
-		{5,5,5,5,5,5,5,5,5,0,15,5,5,5,5,5,5,5,5},
+		{5,5,5,5,5,5,5,5,5,0,15,5,5,5,5,5,5,5,5, 5},
 		{17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17},
 		{18,18,18,19,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18},
 		{0,0,0,0,0,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -254,6 +254,7 @@ public class AnalizadorLexico {
 			int estadoSiguiente = transiciones[estado][columnaActual];
 			String accionActual = acciones[estado][columnaActual];
 			anl.ejecutarAcciones(accionActual,caracter);
+			estado=estadoSiguiente;
 		}
 		/*Una vez acabe el for debemos leer el fin de fichero (columna 9)*/
 
