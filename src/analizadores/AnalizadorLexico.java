@@ -145,10 +145,7 @@ public class AnalizadorLexico {
     public void concatenarCaracteres(char caracter) {
        lexema.concat(""+caracter);
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> 29d91d2dffbc9d42c576a09bf33ef6e19b4ffa3f
 
 	public static void main (String[] args) {
 		
