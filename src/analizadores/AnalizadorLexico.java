@@ -19,7 +19,7 @@ public class AnalizadorLexico {
 	private int contadorDecimal;
 	private int estado;
 	private static Map<String, Integer> columnas = new HashMap<>();//se usará para recorrer la matriz de transiciones
-	
+	private GestorErrores gestor = new GestorErrores();
 	private static int[][] transiciones = new int[23][20];  //Matriz que marca todos los cambios de estado
 	/*={{1,2,1,7,22,8,6,-1,9,21,5,0,22,22,22,22,22,22, -1, -1},
 	{1, 1, 1,12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12},
@@ -87,7 +87,8 @@ public class AnalizadorLexico {
 					char car = data.charAt(i);//transformamos en caracter
 					caracteres.addLast(car);
 				}
-				caracteres.addLast(' ');//añadimos el salto de linea que no se lee explicitamente
+				caracteres.addLast('\n');//añadimos el salto de linea que no se lee explicitamente
+				
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println("Fichero no encontrado.");
