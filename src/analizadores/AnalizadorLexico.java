@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Scanner;          
 import java.io.IOException;
 import java.io.FileWriter;  //para escribir el fichero de tokens
+import tslib.*;
 
 public class AnalizadorLexico {
 	private static String direccion;
