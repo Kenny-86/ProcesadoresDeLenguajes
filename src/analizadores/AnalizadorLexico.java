@@ -336,10 +336,10 @@ public class AnalizadorLexico {
 				tokenStringPalabraReservada("or");
 				break;
 			case "GT8":
-				tokenStringPalabraReservada("asignacion");
+				tokenStringPalabraReservada("igualdad");
 				break;
 			case "GT9":
-				tokenStringPalabraReservada("igualdad");
+				tokenStringPalabraReservada("asignacion");
 				break;
 			case "GT10":
 				tokenStringCadCAr();
