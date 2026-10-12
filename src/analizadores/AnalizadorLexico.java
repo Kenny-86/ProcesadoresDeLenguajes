@@ -326,6 +326,7 @@ public class AnalizadorLexico {
 		        else {
 		            tokenStringPalabraReservada(lexema);
 		        }
+				break;
 			case "GT4":
 				tokenStringPalabraReservada("suma");
 				break;
