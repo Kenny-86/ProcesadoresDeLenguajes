@@ -291,7 +291,7 @@ public class AnalizadorLexico {
 	}
 	
 	public void ejecutarAcciones(String accion, char caracter) {
-		if (accion == "") {
+		if (accion.isEmpty()) {
 			estado = 0;
 		}
 		String[] listaAcciones = accion.split(";");
