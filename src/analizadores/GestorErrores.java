@@ -23,4 +23,7 @@ public class GestorErrores {
 	public String error3 () {
 		return "Error en la linea "+nLinea+": El formato de comentario no es válido";
 	}
+	public String error4() {
+		return  "Error en la linea "+nLinea+": token no válido se esperaba otro dígito";
+	}
 }

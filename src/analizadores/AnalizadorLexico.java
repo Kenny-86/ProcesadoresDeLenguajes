@@ -18,7 +18,6 @@ public class AnalizadorLexico {
 	private String fichero;
 	private int contadorDecimal;
 	private int estado;
-	private static Map<String, Integer> columnas = new HashMap<>();//se usará para recorrer la matriz de transiciones
 	private GestorErrores gestor = new GestorErrores();
 	private static int[][] transiciones = new int[23][20];  //Matriz que marca todos los cambios de estado
 	/*={{1,2,1,7,22,8,6,-1,9,21,5,0,22,22,22,22,22,22, -1, -1},
@@ -53,28 +52,6 @@ public class AnalizadorLexico {
 		this.fichero="tokens.txt";
 		contadorDecimal=0;
 		estado=0;
-		columnas.put(" ",0);//Aqui irian todas las letras
-		columnas.put("_", 2);
-		columnas.put("+", 3);
-		columnas.put("-", 4);
-		columnas.put("|", 5);
-		columnas.put("=", 6);
-		columnas.put("*", 7);
-		columnas.put("/", 8);
-		columnas.put(" ", 9);//Aqui irian el E0f
-		columnas.put(" ",10);//Aqui : "
-		columnas.put(" ", 11);//delimitador
-		columnas.put("\t", 2);
-		columnas.put("\n", 2);
-		columnas.put(",", 12);
-		columnas.put(";", 13);
-		columnas.put("(", 14);
-		columnas.put(")", 15);
-		columnas.put("{", 16);
-		columnas.put("}", 17);
-		columnas.put(".", 18);
-		columnas.put(" ", 19);// o.c.
-		columnas.put(" ", 1);// digitos
 	}
 	//devuelve una lista con cada caracter del fichero de texto
 	public ArrayList<Character> lector( ) {
@@ -147,9 +124,10 @@ public class AnalizadorLexico {
     public void concatenarCaracteres(char caracter) {
        lexema.concat(""+caracter);
     }
-
+    
 
 	public static void main (String[] args) {
+
 		
 		
 	}
