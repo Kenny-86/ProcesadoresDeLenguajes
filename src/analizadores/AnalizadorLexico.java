@@ -242,14 +242,14 @@ public class AnalizadorLexico {
 			/*Nos saltamos la anl.columnaActual = 9 ya que es la del eof
 			 * caso que queremos ver cuando no haya mas caracteres que leer*/
 			}
-			anl.columnaActual = 9;
+			int estadoSiguiente = transiciones[anl.estado][anl.columnaActual];
 			String accionActual = acciones[anl.estado][anl.columnaActual];
-			anl.ejecutarAcciones(accionActual, ' ', gestorErr);
+			anl.ejecutarAcciones(accionActual,caracter, gestorErr);
 			anl.estado=estadoSiguiente;
 		}
-		columnaActual = 9;
-		String accionActual = acciones[estado][columnaActual];
-		anl.ejecutarAcciones(accionActual,' ');
+		anl.columnaActual = 9;
+		String accionActual = acciones[anl.estado][anl.columnaActual];
+		anl.ejecutarAcciones(accionActual, ' ', gestorErr);
 		/*Una vez acabe el for debemos leer el fin de fichero (columna 9)*/
 
 	}
