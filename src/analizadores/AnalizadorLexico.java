@@ -101,7 +101,7 @@ public class AnalizadorLexico {
 					char car = data.charAt(i);//transformamos en caracter
 					caracteres.addLast(car);
 				}
-				caracteres.addLast(' ');//añadimos el salto de linea que no se lee explicitamente
+				caracteres.addLast('\n');//añadimos el salto de linea que no se lee explicitamente
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println("Fichero no encontrado.");
