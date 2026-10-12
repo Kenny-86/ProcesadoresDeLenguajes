@@ -24,8 +24,7 @@ public class AnalizadorLexico {
 	private TS_Gestor gestor = new TS_Gestor("tabla de simbolos");
 	private GestorErrores gestorErr = new GestorErrores();
 	
-	private static int[][] transiciones = new int[23][20];  //Matriz que marca todos los cambios de estado
-	/*={{1,2,1,7,22,8,6,-1,9,21,5,0,22,22,22,22,22,22, -1, -1},
+	private static int[][] transiciones ={{1,2,1,7,22,8,6,-1,9,21,5,0,22,22,22,22,22,22, -1, -1},
 		{1, 1, 1,12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12},
 		{13, 2, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 3, 13},
 		{-1,4,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
@@ -47,7 +46,7 @@ public class AnalizadorLexico {
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}}*/
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}}//Matriz que marca todos los cambios de estado
 	
 	//Matriz que marca todas las acciones semánticas a ser realizadas, no es final, seguramente se cambie
 	private static String[][] acciones= {{"C;L","C;L","C;L","L","L;GT","L","L","E1","L","L;GT","L","L","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","E1","E1"},
