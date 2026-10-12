@@ -4,25 +4,21 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 import java.io.IOException;
 
 import tslib.*;
 
 public class AnalizadorLexico {
-	private static String direccion;
+	private  String direccion;
 	private String lexema;
 	private int entero;
 	private float real;
 	private String fichero;
 	private int contadorDecimal;
-	private static int estado;
-	private static int columnaActual;
-	private static Map<String, Integer> columnas = new HashMap<>();//se usará para recorrer la matriz de transiciones
+	private int estado;
+	private int columnaActual;
 	private TS_Gestor gestor = new TS_Gestor("TablaSimbolos.txt");
-	private GestorErrores gestorErr = new GestorErrores();
 	
 	private static int[][] transiciones ={{1,2,1,7,22,8,6,0,9,21,5,0,22,22,22,22,22,22, 0, 0},
 		{1, 1, 1,12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12},
@@ -46,7 +42,7 @@ public class AnalizadorLexico {
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}}//Matriz que marca todos los cambios de estado
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};//Matriz que marca todos los cambios de estado
 	
 	//Matriz que marca todas las acciones semánticas a ser realizadas, no es final, seguramente se cambie
 	private static String[][] acciones= {{"C;L","C;L","C;L","L","L;GT6","L","L","E1","L","L;GT17","L","L","L;GT11","L;GT12","L;GT13","L;GT14","L;GT15","L;GT16","E1","E1"},
@@ -82,14 +78,8 @@ public class AnalizadorLexico {
 		contadorDecimal=0;
 		estado=0;
 		 gestor.createTSGlobal();
+
 		
-	}
-	public AnalizadorLexico(String dir, String fichero) {
-		direccion=dir;
-		lexema="";
-		entero=0;
-		real=0;
-		this.fichero=fichero;
 	}
 
 	public ArrayList<Character> lector( ) {
@@ -220,7 +210,7 @@ public class AnalizadorLexico {
     }
 
 	public static void main(String[] args) {
-		AnalizadorLexico anl = new AnalizadorLexico("texto.txt", "resultado.txt");
+		AnalizadorLexico anl = new AnalizadorLexico("texto.txt");
 		GestorErrores gestorErr = new GestorErrores();
 		ArrayList<Character> texto = anl.lector();
 		/*for(Character car: texto) {
@@ -230,32 +220,32 @@ public class AnalizadorLexico {
 			char caracter = texto.get(i);
 			int columna = obtenerColumna(caracter,gestorErr);
 			switch (columna) {
-			case 0:columnaActual = 0;break;
-			case 1:columnaActual = 1;break;
-			case 2:columnaActual = 2;break;
-			case 3:columnaActual = 3;break;
-			case 4:columnaActual = 4;break;
-			case 5:columnaActual = 5;break;
-			case 6:columnaActual = 6;break;
-			case 7:columnaActual = 7;break;
-			case 8:columnaActual = 8;break;
-			case 9:columnaActual = 10;break;
-			case 10:columnaActual = 11;break;
-			case 11:columnaActual = 12;break;
-			case 12:columnaActual = 13;break;
-			case 13:columnaActual = 14;break;
-			case 14:columnaActual = 15;break;
-			case 15:columnaActual = 16;break;
-			case 16:columnaActual = 17;break;
-			case 17:columnaActual = 18;break;
-			case 18:columnaActual = 19;break;
-			/*Nos saltamos la columnaActual = 9 ya que es la del eof
+			case 0:anl.columnaActual = 0;break;
+			case 1:anl.columnaActual = 1;break;
+			case 2:anl.columnaActual = 2;break;
+			case 3:anl.columnaActual = 3;break;
+			case 4:anl.columnaActual = 4;break;
+			case 5:anl.columnaActual = 5;break;
+			case 6:anl.columnaActual = 6;break;
+			case 7:anl.columnaActual = 7;break;
+			case 8:anl.columnaActual = 8;break;
+			case 9:anl.columnaActual = 10;break;
+			case 10:anl.columnaActual = 11;break;
+			case 11:anl.columnaActual = 12;break;
+			case 12:anl.columnaActual = 13;break;
+			case 13:anl.columnaActual = 14;break;
+			case 14:anl.columnaActual = 15;break;
+			case 15:anl.columnaActual = 16;break;
+			case 16:anl.columnaActual = 17;break;
+			case 17:anl.columnaActual = 18;break;
+			case 18:anl.columnaActual = 19;break;
+			/*Nos saltamos la anl.columnaActual = 9 ya que es la del eof
 			 * caso que queremos ver cuando no haya mas caracteres que leer*/
 			}
-			int estadoSiguiente = transiciones[estado][columnaActual];
-			String accionActual = acciones[estado][columnaActual];
-			anl.ejecutarAcciones(accionActual,caracter);
-			estado=estadoSiguiente;
+			int estadoSiguiente = transiciones[anl.estado][anl.columnaActual];
+			String accionActual = acciones[anl.estado][anl.columnaActual];
+			anl.ejecutarAcciones(accionActual,caracter, gestorErr);
+			anl.estado=estadoSiguiente;
 		}
 		/*Una vez acabe el for debemos leer el fin de fichero (columna 9)*/
 
@@ -292,7 +282,7 @@ public class AnalizadorLexico {
 		}
 	}
 	
-	public void ejecutarAcciones(String accion, char caracter) {
+	public void ejecutarAcciones(String accion, char caracter, GestorErrores gestorErr) {
 		if (accion.isEmpty()) {
 			estado = 0;
 		}
