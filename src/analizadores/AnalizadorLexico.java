@@ -21,7 +21,7 @@ public class AnalizadorLexico {
 	private static int estado;
 	private static int columnaActual;
 	private static Map<String, Integer> columnas = new HashMap<>();//se usará para recorrer la matriz de transiciones
-	private TS_Gestor gestor = new TS_Gestor("tabla de simbolos");
+	private TS_Gestor gestor = new TS_Gestor("TablaSimbolos.txt");
 	private GestorErrores gestorErr = new GestorErrores();
 	
 	private static int[][] transiciones ={{1,2,1,7,22,8,6,0,9,21,5,0,22,22,22,22,22,22, 0, 0},
