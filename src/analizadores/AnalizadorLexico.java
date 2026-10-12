@@ -215,7 +215,7 @@ public class AnalizadorLexico {
 	}
 
     public void concatenarCaracteres(char caracter) {
-       lexema.concat(""+caracter);
+       lexema=lexema.concat(""+caracter);
     }
 
 	public static void main(String[] args) {
