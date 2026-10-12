@@ -242,9 +242,9 @@ public class AnalizadorLexico {
 			/*Nos saltamos la anl.columnaActual = 9 ya que es la del eof
 			 * caso que queremos ver cuando no haya mas caracteres que leer*/
 			}
-			int estadoSiguiente = transiciones[anl.estado][anl.columnaActual];
+			anl.columnaActual = 9;
 			String accionActual = acciones[anl.estado][anl.columnaActual];
-			anl.ejecutarAcciones(accionActual,caracter, gestorErr);
+			anl.ejecutarAcciones(accionActual, ' ', gestorErr);
 			anl.estado=estadoSiguiente;
 		}
 		columnaActual = 9;
