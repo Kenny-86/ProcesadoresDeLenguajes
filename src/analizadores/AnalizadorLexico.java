@@ -49,7 +49,7 @@ public class AnalizadorLexico {
 	
 	//Matriz que marca todas las acciones semánticas a ser realizadas, no es final, seguramente se cambie
 	private static String[][] acciones= {{"C;L","C;L","C;L","L","L;GT6","L","L","E1","L","L;GT17","L","L","L;GT11","L;GT12","L;GT13","L;GT14","L;GT15","L;GT16","E1","E1"},
-				{"C;L","C;L","C;L","L;GT","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3"},
+				{"C;L","C;L","C;L","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3"},
 				{"L;GT1","N;L","L;GT1","L;GT1","L;GT1","L;GT1","L;GT1","L;GT1","L;GT1","L;GT1","L;GT1","L;GT1","L;GT1","L;GT1","L;GT1","L;GT1","L;GT1","L;GT1","L","L;GT1"},
 				{"E2","D;L","E2","E2","E2","E2","E2","E2","E2","E3","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2"},
 				{"L;GT2","D;L","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2","GT2","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2"},
