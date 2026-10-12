@@ -20,7 +20,6 @@ public class AnalizadorLexico {
 	private int contadorDecimal;
 	private static int estado;
 	private static int columnaActual;
-	private static Map<String, Integer> columnas = new HashMap<>();//se usará para recorrer la matriz de transiciones
 
 	private static int[][] transiciones = new int[23][20];  //Matriz que marca todos los cambios de estado
 	/*={{1,2,1,7,22,8,6,-1,9,21,5,0,22,22,22,22,22,22, -1, -1},
