@@ -253,9 +253,6 @@ public class AnalizadorLexico {
 			}
 			int estadoSiguiente = transiciones[estado][columnaActual];
 			String accionActual = acciones[estado][columnaActual];
-			if (estadoSiguiente==-1) {
-				System.out.println(accionActual);
-			}
 			anl.ejecutarAcciones(accionActual,caracter);
 		}
 		/*Una vez acabe el for debemos leer el fin de fichero (columna 9)*/
