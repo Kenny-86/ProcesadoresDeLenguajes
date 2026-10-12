@@ -209,6 +209,10 @@ public class AnalizadorLexico {
         real=real+res;
     }
 
+	public void inicioReal(){
+		real=(float)real;
+	}
+
     public void concatenarCaracteres(char caracter) {
        lexema.concat(""+caracter);
     }
