@@ -229,25 +229,25 @@ public class AnalizadorLexico {
 			char caracter = texto.get(i);
 			int columna = obtenerColumna(caracter,gestorErr);
 			switch (columna) {
-			case 0:columnaActual = 0;
-			case 1:columnaActual = 1;
-			case 2:columnaActual = 2;
-			case 3:columnaActual = 3;
-			case 4:columnaActual = 4;
-			case 5:columnaActual = 5;
-			case 6:columnaActual = 6;
-			case 7:columnaActual = 7;
-			case 8:columnaActual = 8;
-			case 9:columnaActual = 10;
-			case 10:columnaActual = 11;
-			case 11:columnaActual = 12;
-			case 12:columnaActual = 13;
-			case 13:columnaActual = 14;
-			case 14:columnaActual = 15;
-			case 15:columnaActual = 16;
-			case 16:columnaActual = 17;
-			case 17:columnaActual = 18;
-			case 18:columnaActual = 19;
+			case 0:columnaActual = 0;break;
+			case 1:columnaActual = 1;break;
+			case 2:columnaActual = 2;break;
+			case 3:columnaActual = 3;break;
+			case 4:columnaActual = 4;break;
+			case 5:columnaActual = 5;break;
+			case 6:columnaActual = 6;break;
+			case 7:columnaActual = 7;break;
+			case 8:columnaActual = 8;break;
+			case 9:columnaActual = 10;break;
+			case 10:columnaActual = 11;break;
+			case 11:columnaActual = 12;break;
+			case 12:columnaActual = 13;break;
+			case 13:columnaActual = 14;break;
+			case 14:columnaActual = 15;break;
+			case 15:columnaActual = 16;break;
+			case 16:columnaActual = 17;break;
+			case 17:columnaActual = 18;break;
+			case 18:columnaActual = 19;break;
 			/*Nos saltamos la columnaActual = 9 ya que es la del eof
 			 * caso que queremos ver cuando no haya mas caracteres que leer*/
 			}
