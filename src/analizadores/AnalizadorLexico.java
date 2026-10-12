@@ -247,6 +247,9 @@ public class AnalizadorLexico {
 			anl.ejecutarAcciones(accionActual,caracter, gestorErr);
 			anl.estado=estadoSiguiente;
 		}
+		columnaActual = 9;
+		String accionActual = acciones[estado][columnaActual];
+		anl.ejecutarAcciones(accionActual,' ');
 		/*Una vez acabe el for debemos leer el fin de fichero (columna 9)*/
 
 	}
