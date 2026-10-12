@@ -20,7 +20,10 @@ public class AnalizadorLexico {
 	private int contadorDecimal;
 	private static int estado;
 	private static int columnaActual;
-
+	private static Map<String, Integer> columnas = new HashMap<>();//se usará para recorrer la matriz de transiciones
+	private TS_Gestor gestor = new TS_Gestor("tabla de simbolos");
+	private GestorErrores gestorErr = new GestorErrores();
+	
 	private static int[][] transiciones = new int[23][20];  //Matriz que marca todos los cambios de estado
 	/*={{1,2,1,7,22,8,6,-1,9,21,5,0,22,22,22,22,22,22, -1, -1},
 		{1, 1, 1,12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12},
@@ -47,15 +50,15 @@ public class AnalizadorLexico {
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}}*/
 	
 	//Matriz que marca todas las acciones semánticas a ser realizadas, no es final, seguramente se cambie
-	private static String[][] acciones= {{"C;L","C;L","C;L","L","L;GT6","L","L","E1","L","L;GT17","L","L","L;GT11","L;GT12","L;GT13","L;GT14","L;GT15","L;GT16","E1","E1"},
-				{"C;L","C;L","C;L","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3","L;GT3"},
-				{"L;GT1","N;L","L;GT1","L;GT1","L;GT1","L;GT1","L;GT1","L;GT1","L;GT1","L;GT1","L;GT1","L;GT1","L;GT1","L;GT1","L;GT1","L;GT1","L;GT1","L;GT1","L","L;GT1"},
+	private static String[][] acciones= {{"C;L","C;L","C;L","L","L;GT","L","L","E1","L","L;GT","L","L","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","E1","E1"},
+				{"C;L","C;L","C;L","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT"},
+				{"L;GT","N;L","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L","L;GT"},
 				{"E2","D;L","E2","E2","E2","E2","E2","E2","E2","E3","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2"},
-				{"L;GT2","D;L","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2","GT2","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2"},
+				{"L;GT","D;L","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT"},
 				{"C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L","E3","C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L"}, 
-				{"L;GT9","L;GT9","L;GT9","L;GT9","L;GT9","L;GT9","L;GT9","L;GT9","L;GT9","GT9","L;GT9","L;GT9","L;GT9","L;GT9","L;GT9","L;GT9","L;GT9","L;GT9","L;GT9","L;GT9"},
-				{"L;GT4","L;GT4","L;GT5","L;GT4","L;GT4","L;GT4","L;GT4","L;GT4","L;GT4","GT4","L;GT4","L;GT4","L;GT4","L;GT4","L;GT4","L;GT4","L;GT4","L;GT4","L;GT4","L;GT4"},
-				{"E2","E2","E2","E2","E2","L;GT7","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2"},
+				{"L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT"},
+				{"L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT"},
+				{"E2","E2","E2","E2","E2","L;GT","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2"},
 				{"E3","E3","E3","E3","E3","E3","E3","L","E3","E3","E3","E3","E3","E3","E3","E3","E3","E3","E3","E3"},
 				{"L","L","L","L","L","L","L","L","L","E3","L","L","L","L","L","L","L","L","L","L"},
 				{"L","L","L","L","L","L","L","L","L","E3","L","L","L","L","L","L","L","L","L","L"},
@@ -79,30 +82,8 @@ public class AnalizadorLexico {
 		this.fichero="tokens.txt";
 		contadorDecimal=0;
 		estado=0;
-		columnas.put(" ",0);//Aqui irian todas las letras
-		columnas.put("_", 2);
-		columnas.put("+", 3);
-		columnas.put("-", 4);
-		columnas.put("|", 5);
-		columnas.put("=", 6);
-		columnas.put("*", 7);
-		columnas.put("/", 8);
-		columnas.put(" ", 9);//Aqui irian el E0f
-		columnas.put(" ",10);//Aqui : "
-		columnas.put(" ", 11);//delimitador
-		columnas.put("\t", 2);
-		columnas.put("\n", 2);
-		columnas.put(",", 12);
-		columnas.put(";", 13);
-		columnas.put("(", 14);
-		columnas.put(")", 15);
-		columnas.put("{", 16);
-		columnas.put("}", 17);
-		columnas.put(".", 18);
-		columnas.put(" ", 19);// o.c.
-		columnas.put(" ", 1);// digitos
+		
 	}
-	private TS_Gestor gestor = new TS_Gestor("tabla de simbolos");
 	public AnalizadorLexico(String dir, String fichero) {
 		direccion=dir;
 		lexema="";
@@ -327,18 +308,75 @@ public class AnalizadorLexico {
 			case "D":
 				concatenarNumeroDecimal(caracter);
 				break;
-			case "GT":break;
+			case "GT1":
+				tokenStringEntero();
+				break;
+			case "GT2":
+				tokenStringReal();
+				break;
+			case "GT3": 
+		        if (gestor.getEntradaTPalabrasReservadas(lexema)==0) {
+		        int pos=gestor.addEntradaTSGlobal(lexema);
+		        tokenStringId(pos);
+		    }
+		        else {
+		            tokenStringPalabraReservada(lexema);
+		        }
+			case "GT4":
+				tokenStringPalabraReservada("suma");
+				break;
+			case "GT5":
+				tokenStringPalabraReservada("preIncremento");
+				break;
+			case "GT6":
+				tokenStringPalabraReservada("resta");
+				break;
+			case "GT7":
+				tokenStringPalabraReservada("or");
+				break;
+			case "GT8":
+				tokenStringPalabraReservada("asignacion");
+				break;
+			case "GT9":
+				tokenStringPalabraReservada("igualdad");
+				break;
+			case "GT10":
+				tokenStringCadCAr();
+				break;
+			case "GT11":
+				tokenStringPalabraReservada("coma");
+				break;
+			case "GT12":
+				tokenStringPalabraReservada("puntoComa");
+				break;
+			case "GT13":
+				tokenStringPalabraReservada("abrirParentesis");
+				break;
+			case "GT14":
+				tokenStringPalabraReservada("cerrarParentesis");
+				break;
+			case "GT15":
+				tokenStringPalabraReservada("abrirLlave");
+				break;
+			case "GT16":
+				tokenStringPalabraReservada("cerrarLlave");
+				break;
+			case "GT17":
+				tokenStringPalabraReservada("eof");
+				break;
+			case "E1":
+				gestorErr.error1(caracter);
+				break;
+			case "E2":
+				gestorErr.error2(lexema);
+				break;
+			case "E3":
+				gestorErr.error3();
+				break;
+			case "E4":
+				gestorErr.error4();
+				break;
 			}
 		}
-	}
-	
-	public boolean esPalabraReservada(TS_Gestor gestor) {
-		int check = gestor.getEntradaTPalabrasReservadas(lexema);
-		if (check>0) {
-			return true;
-		}
-		else
-			return false;
-	}
-
+	}	
 }
