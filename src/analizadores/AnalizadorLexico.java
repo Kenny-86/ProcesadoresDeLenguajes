@@ -48,15 +48,15 @@ public class AnalizadorLexico {
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}}*/
 	
 	//Matriz que marca todas las acciones semánticas a ser realizadas, no es final, seguramente se cambie
-	private static String[][] acciones= {{"C;L","C;L","C;L","L","L;GT","L","L","E1","L","L;GT","L","L","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","E1","E1"},
+	private static String[][] acciones= {{"C;L","C;L","C;L","L","L;GT6","L","L","E1","L","L;GT","L","L","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","E1","E1"},
 				{"C;L","C;L","C;L","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT"},
 				{"L;GT","N;L","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L","L;GT"},
 				{"E2","D;L","E2","E2","E2","E2","E2","E2","E2","E3","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2"},
-				{"L;GT","D;L","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT"},
+				{"L;GT2","D;L","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2","GT2","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2","L;GT2"},
 				{"C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L","E3","C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L"}, 
-				{"L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT"},
-				{"L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT","L;GT"},
-				{"E2","E2","E2","E2","E2","L;GT","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2"},
+				{"L;GT9","L;GT9","L;GT9","L;GT9","L;GT9","L;GT9","L;GT9","L;GT9","L;GT9","GT9","L;GT9","L;GT9","L;GT9","L;GT9","L;GT9","L;GT9","L;GT9","L;GT9","L;GT9","L;GT9"},
+				{"L;GT4","L;GT4","L;GT5","L;GT4","L;GT4","L;GT4","L;GT4","L;GT4","L;GT4","GT4","L;GT4","L;GT4","L;GT4","L;GT4","L;GT4","L;GT4","L;GT4","L;GT4","L;GT4","L;GT4"},
+				{"E2","E2","E2","E2","E2","L;GT7","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2"},
 				{"E3","E3","E3","E3","E3","E3","E3","L","E3","E3","E3","E3","E3","E3","E3","E3","E3","E3","E3","E3"},
 				{"L","L","L","L","L","L","L","L","L","E3","L","L","L","L","L","L","L","L","L","L"},
 				{"L","L","L","L","L","L","L","L","L","E3","L","L","L","L","L","L","L","L","L","L"},
