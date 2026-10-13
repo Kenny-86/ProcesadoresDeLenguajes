@@ -13,9 +13,8 @@ public class AnalizadorLexico {
 	private String direccion;
 	private String lexema;
 	private int entero;
-	private float real;
+	private int real;
 	private String fichero;
-	private int contadorDecimal;
 	private int estado;
 	private int columnaActual;
 	private TS_Gestor gestor = new TS_Gestor("TablaSimbolos.txt");
@@ -43,7 +42,7 @@ public class AnalizadorLexico {
 	private static String[][] acciones = {
 			/*0*/ {"C;L","N;L","C;L","L","L;GT6","L","L","E1","L","GT17","L","L","L;GT11","L;GT12","L;GT13","L;GT14","L;GT15","L;GT16","E1","E1"},
 			/*1*/ {"C;L","C;L","C;L","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3"},
-			/*2*/ {"GT1","N;L","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","L;R","GT1"},
+			/*2*/ {"GT1","N;L","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","L","GT1"},
 			/*3*/ {"E2","D;L","E2","E2","E2","E2","E2","E2","E2","E3","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2"},
 			/*4*/ {"GT2","D;L","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2"},
 			/*5*/ {"C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L","E5","L;GT10","C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L"},
@@ -62,7 +61,6 @@ public class AnalizadorLexico {
 		real = 0;
 		this.fichero = "tokens.txt";
 		new File(fichero).delete();
-		contadorDecimal = 0;
 		estado = 0;
 		crearTPalRes(gestor); // primero las palabras reservadas
 		crearAtributos(gestor);
@@ -163,9 +161,10 @@ public class AnalizadorLexico {
 	}
 
 	public void tokenStringReal() {
-		escribirTexto("< real, " + real + " >");
+		//hace falta cambiar el formato del real para que se ajuste a la especificación de la páctica
+		escribirTexto("< real, " +  entero+"."+real+ ">");
+		entero=0;
 		real = 0;
-		contadorDecimal = 0;
 	}
 
 	public void tokenStringId(int posTS) {
@@ -186,15 +185,9 @@ public class AnalizadorLexico {
 	}
 
 	public void concatenarNumeroDecimal(char num) {
-		float res = num - '0';
-		contadorDecimal -= 1;
-		res = res * (float) Math.pow(10, contadorDecimal);
-		real = real + res;
-	}
-
-	public void inicioReal() {
-		real = (float) entero;
-		entero = 0;
+		int res = num -'0';
+		real=real*10+res;
+		
 	}
 
 	public void concatenarCaracteres(char caracter) {
@@ -205,7 +198,6 @@ public class AnalizadorLexico {
 		lexema = "";
 		entero = 0;
 		real = 0;
-		contadorDecimal = 0;
 	}
 
 	public static void main(String[] args) {
@@ -283,7 +275,6 @@ public class AnalizadorLexico {
 			case "C": concatenarCaracteres(caracter); break;
 			case "N": concatenarNumeroEnt(caracter); break;
 			case "D": concatenarNumeroDecimal(caracter); break;
-			case "R": inicioReal(); break;
 			case "GT1": tokenStringEntero(); break;
 			case "GT2": tokenStringReal(); break;
 			case "GT3":
@@ -304,10 +295,7 @@ public class AnalizadorLexico {
 			case "GT7": tokenStringPalabraReservada("or"); break;
 			case "GT8": tokenStringPalabraReservada("asignacion"); break;
 			case "GT9": tokenStringPalabraReservada("igualdad"); break;
-			case "GT10":
-				tokenStringCadCAr();
-				lexema = "";
-				break;
+			case "GT10":tokenStringCadCAr();lexema = "";break;
 			case "GT11": tokenStringPalabraReservada("coma"); break;
 			case "GT12": tokenStringPalabraReservada("puntoComa"); break;
 			case "GT13": tokenStringPalabraReservada("abrirParentesis"); break;
