@@ -224,7 +224,7 @@ public class AnalizadorLexico {
 			anl.estado = (estadoSiguiente >= 12) ? 0 : estadoSiguiente;
 
 			// Solo se avanza si la accion lee o da error
-			boolean consume = accionActual.contains("L")|| accionActual.startsWith("E");
+			boolean consume = accionActual.contains("L")|| accionActual.contains("E");
 			if (consume) {
 				if (caracter == '\n') {
 					gestorErr.siguienteLinea();
