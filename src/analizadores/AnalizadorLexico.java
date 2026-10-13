@@ -177,7 +177,7 @@ public class AnalizadorLexico {
 	}
 
 	public void tokenStringPalabraReservada(String nombre) {
-		escribirTexto("< " + nombre + ", ->");
+		escribirTexto("< " + nombre + ", >");
 	}
 
 	public void concatenarNumeroEnt(char num) {
