@@ -307,7 +307,7 @@ public class AnalizadorLexico {
 			case "E2": gestorErr.error2(lexema, caracter); reiniciarAcumuladores(); break;
 			case "E3": gestorErr.error3(); reiniciarAcumuladores(); break;
 			case "E4": gestorErr.error4(entero); reiniciarAcumuladores(); break;
-			case "E5": gestorErr.error5(); reiniciarAcumuladores(); break;
+			case "E5": gestorErr.error5(lexema+caracter); reiniciarAcumuladores(); break;
 			}
 		}
 	}

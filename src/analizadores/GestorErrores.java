@@ -31,8 +31,8 @@ public class GestorErrores {
 	public void error4(int num) {
 		escribirTexto(  "Error en la linea "+nLinea+": Error léxico: token "+num+"."+" no es válido se esperaba otro dígito");
 	}
-	public void error5() {
-		escribirTexto( "Error en la linea "+nLinea+": Error léxico: El formato de cadena no es válido");
+	public void error5(String cadena) {
+		escribirTexto( "Error en la linea "+nLinea+": Error léxico: El formato de cadena "+cadena+" no es válido");
 	}
 	private void escribirTexto(String string) {
 		try (FileWriter escritor = new FileWriter(fichero, true)) {
