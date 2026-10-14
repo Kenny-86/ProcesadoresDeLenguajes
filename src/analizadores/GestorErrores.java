@@ -1,10 +1,15 @@
+
 package analizadores;
+
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class GestorErrores {
 	private int nLinea;
+	private static String fichero= "errores.txt";
 	
 	public GestorErrores() {
-		nLinea=0;
+		nLinea=1;
 	}
 	public void siguienteLinea() {
 		++nLinea;
@@ -13,17 +18,28 @@ public class GestorErrores {
 		return nLinea;
 	}
 //añadir los distintos errores
-	public String error1(char c) {
-		return "Se ha detectado el caracter "+c+" en la linea "+nLinea+". \n Este símbolo no es aceptado por este lenguaje en este contexto";
+	public void error1(char c) {
+		escribirTexto( "Error en la linea: "+nLinea+" Error léxico: Se leyó el caracter: "+c+" que no es aceptado en este lenguaje en este contexto");
 	}
-	public String error2( String lexema) {
-		return "Error de escritura en la linea "+nLinea+", el token "+ lexema+" no es válido";
+	public void error2( String lexema, char caracter) {
+		escribirTexto( "Error en la linea "+nLinea+"Error léxico: El token "+ lexema+ caracter+" no es válido");
 	}
 	
-	public String error3 () {
-		return "Error en la linea "+nLinea+": El formato de comentario no es válido";
+	public void error3 () {
+		escribirTexto( "Error en la linea "+nLinea+": Error léxico: El formato de comentario no es válido");
 	}
-	public String error4() {
-		return  "Error en la linea "+nLinea+": token no válido se esperaba otro dígito";
+	public void error4(int num) {
+		escribirTexto(  "Error en la linea "+nLinea+": Error léxico: token "+num+"."+" no es válido se esperaba otro dígito");
+	}
+	public void error5() {
+		escribirTexto( "Error en la linea "+nLinea+": Error léxico: El formato de cadena no es válido");
+	}
+	private void escribirTexto(String string) {
+		try (FileWriter escritor = new FileWriter(fichero, true)) {
+			escritor.write(string + "\n");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
+

@@ -43,7 +43,7 @@ public class AnalizadorLexico {
 			/*0*/ {"C;L","N;L","C;L","L","L;GT6","L","L","E1","L","GT17","L","L","L;GT11","L;GT12","L;GT13","L;GT14","L;GT15","L;GT16","E1","E1"},
 			/*1*/ {"C;L","C;L","C;L","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3"},
 			/*2*/ {"GT1","N;L","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","L","GT1"},
-			/*3*/ {"E2","D;L","E2","E2","E2","E2","E2","E2","E2","E3","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2"},
+			/*3*/ {"E4","D;L","E4","E4","E4","E4","E4","E4","E4","E4","E4","E4","E4","E4","E4","E4","E4","E4","E4","E4"},
 			/*4*/ {"GT2","D;L","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2"},
 			/*5*/ {"C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L","E5","L;GT10","C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L"},
 			/*6*/ {"GT8","GT8","GT8","GT8","GT8","GT8","L;GT9","GT8","GT8","GT8","GT8","GT8","GT8","GT8","GT8","GT8","GT8","GT8","GT8","GT8"},
@@ -306,8 +306,8 @@ public class AnalizadorLexico {
 			case "E1": gestorErr.error1(caracter); reiniciarAcumuladores(); break;
 			case "E2": gestorErr.error2(lexema, caracter); reiniciarAcumuladores(); break;
 			case "E3": gestorErr.error3(); reiniciarAcumuladores(); break;
-			case "E4": gestorErr.error4(); reiniciarAcumuladores(); break;
-			case "E5": gestorErr.error4(); reiniciarAcumuladores(); break;
+			case "E4": gestorErr.error4(entero); reiniciarAcumuladores(); break;
+			case "E5": gestorErr.error5(); reiniciarAcumuladores(); break;
 			}
 		}
 	}
