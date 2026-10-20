@@ -6,17 +6,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
 import tslib.*;
 
 public class AnalizadorLexico {
 	private String direccion;
 	private String lexema;
 	private int entero;
-	private int real;
+	private long real;
 	private String fichero;
 	private int estado;
 	private int columnaActual;
+	private int contadorDecimal;
 	private TS_Gestor gestor = new TS_Gestor("TablaSimbolos.txt");
 
 	/* Columnas: 0 letra, 1 digito, 2 '_', 3 '+', 4 '-', 5 '|', 6 '=', 7 '*', 8 '/',
@@ -40,12 +40,12 @@ public class AnalizadorLexico {
 
 
 	private static String[][] acciones = {
-			/*0*/ {"C;L","N;L","C;L","L","L;GT6","L","L","E1","L","GT17","L","L","L;GT11","L;GT12","L;GT13","L;GT14","L;GT15","L;GT16","E1","E1"},
+			/*0*/ {"C;L","N;L","C;L","L","L;GT6","L","L","E1","L","GT17","C;L","L","L;GT11","L;GT12","L;GT13","L;GT14","L;GT15","L;GT16","E1","E1"},
 			/*1*/ {"C;L","C;L","C;L","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3"},
 			/*2*/ {"GT1","N;L","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","L","GT1"},
 			/*3*/ {"E4","D;L","E4","E4","E4","E4","E4","E4","E4","E4","E4","E4","E4","E4","E4","E4","E4","E4","E4","E4"},
 			/*4*/ {"GT2","D;L","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2"},
-			/*5*/ {"C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L","E5","L;GT10","C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L"},
+			/*5*/ {"C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L","E5","C;L;GT10","C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L"},
 			/*6*/ {"GT8","GT8","GT8","GT8","GT8","GT8","L;GT9","GT8","GT8","GT8","GT8","GT8","GT8","GT8","GT8","GT8","GT8","GT8","GT8","GT8"},
 			/*7*/ {"GT4","GT4","GT4","L;GT5","GT4","GT4","GT4","GT4","GT4","GT4","GT4","GT4","GT4","GT4","GT4","GT4","GT4","GT4","GT4","GT4"},
 			/*8*/ {"E2","E2","E2","E2","E2","L;GT7","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2"},
@@ -161,10 +161,12 @@ public class AnalizadorLexico {
 	}
 
 	public void tokenStringReal() {
-		//hace falta cambiar el formato del real para que se ajuste a la especificación de la páctica
-		escribirTexto("< real, " +  entero+"."+real+ ">");
+		// Aqui pasamos a String pero podemos calcular el valor del real con la fórmula de  entero+real*Math.pow(10, -contadorDecimal)
+		//Posiblemente haya que comprobar si el número de decimales es el adecuado en caso contrario devolver un error
+		escribirTexto("< real, " +String.format("%"+contadorDecimal+"f",(double)(entero+real*Math.pow(10, -contadorDecimal)) ).replace(',', '.')+ " >");
 		entero=0;
 		real = 0;
+		contadorDecimal = 0;
 	}
 
 	public void tokenStringId(int posTS) {
@@ -180,15 +182,16 @@ public class AnalizadorLexico {
 	}
 
 	public void concatenarNumeroEnt(char num) {
-		int res = num - '0';
+		int res = num - '0';		
 		entero = entero * 10 + res;
 	}
 
 	public void concatenarNumeroDecimal(char num) {
-		int res = num -'0';
-		real=real*10+res;
-		
+		long res = num-'0';
+		real= real*10+res;
+		contadorDecimal+=1;
 	}
+
 
 	public void concatenarCaracteres(char caracter) {
 		lexema = lexema.concat("" + caracter);
@@ -198,6 +201,7 @@ public class AnalizadorLexico {
 		lexema = "";
 		entero = 0;
 		real = 0;
+		contadorDecimal=0;
 	}
 
 	public static void main(String[] args) {
@@ -275,8 +279,24 @@ public class AnalizadorLexico {
 			case "C": concatenarCaracteres(caracter); break;
 			case "N": concatenarNumeroEnt(caracter); break;
 			case "D": concatenarNumeroDecimal(caracter); break;
-			case "GT1": tokenStringEntero(); break;
-			case "GT2": tokenStringReal(); break;
+			case "GT1": 
+				if(Math.abs(entero)>32676) {
+					gestorErr.error7(entero);
+					reiniciarAcumuladores();
+				}
+				else {
+				tokenStringEntero(); 
+				}
+				break;
+			case "GT2":
+				if(Math.abs(entero+real*Math.pow(10, -contadorDecimal))>117549436) {
+					gestorErr.error8( real);
+					reiniciarAcumuladores();
+				}
+				else {
+				tokenStringReal(); }
+				break;
+
 			case "GT3":
 				if (gestor.getEntradaTPalabrasReservadas(lexema) == 0) {
 					int pos = gestor.addEntradaTSGlobal(lexema);
@@ -295,7 +315,11 @@ public class AnalizadorLexico {
 			case "GT7": tokenStringPalabraReservada("or"); break;
 			case "GT8": tokenStringPalabraReservada("asignacion"); break;
 			case "GT9": tokenStringPalabraReservada("igualdad"); break;
-			case "GT10":tokenStringCadCAr();lexema = "";break;
+			case "GT10":
+				if(lexema.length()>66) {//contamos la longitud de la cadema para ver si es válida, incluye las comillas
+					gestorErr.error6(lexema);
+					lexema="";}
+				tokenStringCadCAr();lexema = "";break;
 			case "GT11": tokenStringPalabraReservada("coma"); break;
 			case "GT12": tokenStringPalabraReservada("puntoComa"); break;
 			case "GT13": tokenStringPalabraReservada("abrirParentesis"); break;
