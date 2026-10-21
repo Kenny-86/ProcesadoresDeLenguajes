@@ -163,7 +163,7 @@ public class AnalizadorLexico {
 	public void tokenStringReal() {
 		// Aqui pasamos a String pero podemos calcular el valor del real con la fórmula de  entero+real*Math.pow(10, -contadorDecimal)
 		//Posiblemente haya que comprobar si el número de decimales es el adecuado en caso contrario devolver un error
-		escribirTexto("< real, " +String.format("%"+contadorDecimal+"f",(double)(entero+real*Math.pow(10, -contadorDecimal)) ).replace(',', '.')+ " >");
+		escribirTexto("< real, " +String.format("%."+contadorDecimal+"f",(double)(entero+real*Math.pow(10, -contadorDecimal)) ).replace(',', '.')+ " >");
 		entero=0;
 		real = 0;
 		contadorDecimal = 0;
