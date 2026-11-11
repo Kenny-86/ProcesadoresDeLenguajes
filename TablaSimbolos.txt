@@ -1,0 +1,25 @@
+TABLA PRINCIPAL #1:
+*LEXEMA: 'i'
+	Atributos:
+	+ Tipo: '-'
+*LEXEMA: 'st'
+	Atributos:
+	+ Tipo: '-'
+*LEXEMA: 'b'
+	Atributos:
+	+ Tipo: '-'
+*LEXEMA: 'c'
+	Atributos:
+	+ Tipo: '-'
+*LEXEMA: 'j'
+	Atributos:
+	+ Tipo: '-'
+*LEXEMA: 'a'
+	Atributos:
+	+ Tipo: '-'
+*LEXEMA: 'n'
+	Atributos:
+	+ Tipo: '-'
+*LEXEMA: 'm'
+	Atributos:
+	+ Tipo: '-'

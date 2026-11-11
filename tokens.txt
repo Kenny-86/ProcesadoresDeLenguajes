@@ -1,0 +1,39 @@
+< let, >
+< id, 1 >
+< int, >
+< asignacion, >
+< entero, 11 >
+< puntoComa, >
+< let, >
+< id, 2 >
+< string, >
+< puntoComa, >
+< let, >
+< id, 3 >
+< boolean, >
+< puntoComa, >
+< let, >
+< id, 4 >
+< int, >
+< asignacion, >
+< entero, 66 >
+< suma, >
+< id, 1 >
+< puntoComa, >
+< let, >
+< id, 5 >
+< int, >
+< asignacion, >
+< entero, 5 >
+< puntoComa, >
+< id, 6 >
+< asignacion, >
+< preIncremento, >
+< id, 5 >
+< puntoComa, >
+< id, 7 >
+< suma, >
+< asignacion, >
+< id, 8 >
+< puntoComa, >
+< eof, >

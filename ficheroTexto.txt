@@ -1,0 +1,7 @@
+let i int = 11;
+let st string;
+let b boolean;
+let c int = 66+i;
+let j int=5;
+a = ++j; /* si j valía 5, ahora a == 5 y j == 6 */
+n += m;    /* es equivalente a n = n + m */
