@@ -43,15 +43,15 @@ public class AnalizadorLexico {
 			/*0*/ {"C;L","N;L","C;L","L","L;GT6","L","L","E1","L","GT17","C;L","L","L;GT11","L;GT12","L;GT13","L;GT14","L;GT15","L;GT16","E1","E1"},
 			/*1*/ {"C;L","C;L","C;L","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3","GT3"},
 			/*2*/ {"GT1","N;L","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","GT1","L","GT1"},
-			/*3*/ {"E4","D;L","E4","E4","E4","E4","E4","E4","E4","E4","E4","E4","E4","E4","E4","E4","E4","E4","E4","E4"},
+			/*3*/ {"E3","D;L","E3","E3","E3","E3","E3","E3","E3","E3","E3","E3","E3","E3","E3","E3","E3","E3","E3","E3"},
 			/*4*/ {"GT2","D;L","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2","GT2"},
-			/*5*/ {"C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L","E5","C;L;GT10","C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L"},
+			/*5*/ {"C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L","E4","C;L;GT10","C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L","C;L"},
 			/*6*/ {"GT8","GT8","GT8","GT8","GT8","GT8","L;GT9","GT8","GT8","GT8","GT8","GT8","GT8","GT8","GT8","GT8","GT8","GT8","GT8","GT8"},
 			/*7*/ {"GT4","GT4","GT4","L;GT5","GT4","GT4","GT4","GT4","GT4","GT4","GT4","GT4","GT4","GT4","GT4","GT4","GT4","GT4","GT4","GT4"},
-			/*8*/ {"E2","E2","E2","E2","E2","L;GT7","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2","E2"},
-			/*9*/ {"E3","E3","E3","E3","E3","E3","E3","L","E3","E3","E3","E3","E3","E3","E3","E3","E3","E3","E3","E3"},
-			/*10*/{"L","L","L","L","L","L","L","L","L","E3","L","L","L","L","L","L","L","L","L","L"},
-			/*11*/{"L","L","L","L","L","L","L","L","L","E3","L","L","L","L","L","L","L","L","L","L"}
+			/*8*/ {"E1","E1","E1","E1","E1","L;GT7","E1","E1","E1","E1","E1","E1","E1","E1","E1","E1","E1","E1","E1","E1"},
+			/*9*/ {"E5","E5","E5","E5","E5","E5","E5","L","E2","E5","E5","E5","E5","E5","E5","E5","E5","E5","E5","E5"},
+			/*10*/{"L","L","L","L","L","L","L","L","L","E2","L","L","L","L","L","L","L","L","L","L"},
+			/*11*/{"L","L","L","L","L","L","L","L","L","E2","L","L","L","L","L","L","L","L","L","L"}
 	};
 
 	public AnalizadorLexico(String dir) {
@@ -92,6 +92,7 @@ public class AnalizadorLexico {
 			System.out.println("Fichero no encontrado.");
 			e.printStackTrace();
 		}
+		caracteres.removeLast();
 		return caracteres;
 	}
 
@@ -162,8 +163,8 @@ public class AnalizadorLexico {
 
 	public void tokenStringReal() {
 		// Aqui pasamos a String pero podemos calcular el valor del real con la fórmula de  entero+real*Math.pow(10, -contadorDecimal)
-		//Posiblemente haya que comprobar si el número de decimales es el adecuado en caso contrario devolver un error
-		escribirTexto("< real, " +String.format("%."+contadorDecimal+"f",(double)(entero+real*Math.pow(10, -contadorDecimal)) ).replace(',', '.')+ " >");
+		//String.format("%."+contadorDecimal+"f",(entero+real*Math.pow(10, -contadorDecimal)) ).replace(',', '.');
+		escribirTexto("< real, " +entero+"."+real+ " >");
 		entero=0;
 		real = 0;
 		contadorDecimal = 0;
@@ -187,9 +188,9 @@ public class AnalizadorLexico {
 	}
 
 	public void concatenarNumeroDecimal(char num) {
-		long res = num-'0';
+		contadorDecimal++;
+		int res = num-'0';
 		real= real*10+res;
-		contadorDecimal+=1;
 	}
 
 
@@ -289,8 +290,8 @@ public class AnalizadorLexico {
 				}
 				break;
 			case "GT2":
-				if(Math.abs(entero+real*Math.pow(10, -contadorDecimal))>117549436) {
-					gestorErr.error8( real);
+				if(Math.abs(entero+real*Math.pow(10, -contadorDecimal))>117549436.0) {
+					gestorErr.error8( entero, real);
 					reiniciarAcumuladores();
 				}
 				else {
@@ -328,10 +329,10 @@ public class AnalizadorLexico {
 			case "GT16": tokenStringPalabraReservada("cerrarLlave"); break;
 			case "GT17": tokenStringPalabraReservada("eof"); break;
 			case "E1": gestorErr.error1(caracter); reiniciarAcumuladores(); break;
-			case "E2": gestorErr.error2(lexema, caracter); reiniciarAcumuladores(); break;
-			case "E3": gestorErr.error3(); reiniciarAcumuladores(); break;
-			case "E4": gestorErr.error4(entero); reiniciarAcumuladores(); break;
-			case "E5": gestorErr.error5(lexema+caracter); reiniciarAcumuladores(); break;
+			case "E2": gestorErr.error2(); reiniciarAcumuladores(); break;
+			case "E3": gestorErr.error3(entero, caracter); reiniciarAcumuladores(); break;
+			case "E4": gestorErr.error4(lexema+caracter); reiniciarAcumuladores(); break;
+			case "E5": gestorErr.error5(); reiniciarAcumuladores(); break;
 			}
 		}
 	}
