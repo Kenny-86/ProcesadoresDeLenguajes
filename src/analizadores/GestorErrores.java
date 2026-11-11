@@ -21,6 +21,7 @@ public class GestorErrores {
 	public void error1(char c) {
 		escribirTexto( "Error en la linea: "+nLinea+" Error léxico: Se leyó el caracter: "+c+" que no es aceptado en este lenguaje en este contexto.");
 	}
+<<<<<<< HEAD
 	
 	public void error2() {
 		escribirTexto( "Error en la linea "+nLinea+": Error léxico: El formato de comentario no es válido.");
@@ -33,6 +34,20 @@ public class GestorErrores {
 	}
 	public void error5() {
 		error1('/');
+=======
+	public void error2( String lexema, char caracter) {
+		escribirTexto( "Error en la linea "+nLinea+"Error léxico: El token "+ lexema+ caracter+" no es válido.");
+	}
+	
+	public void error3 () {
+		escribirTexto( "Error en la linea "+nLinea+": Error léxico: El formato de comentario no es válido.");
+	}
+	public void error4(int num) {
+		escribirTexto(  "Error en la linea "+nLinea+": Error léxico: token "+num+"."+" no es válido se esperaba otro dígito.");
+	}
+	public void error5(String cadena) {
+		escribirTexto( "Error en la linea "+nLinea+": Error léxico: El formato de cadena "+cadena+" no es válido.");
+>>>>>>> 1db2de38b3ff7c9fe3dd2f6f7a82553873193b90
 	}
 	public void error6(String cadena) {
 		escribirTexto( "Error en la linea "+nLinea+": Error léxico: El formato de cadena "+cadena+" no es válido, ocupa más de 64 caracteres.");
@@ -40,10 +55,16 @@ public class GestorErrores {
 	public void error7(int entero) {
 		escribirTexto( "Error en la linea "+nLinea+": Error léxico: El valor del int "+entero+" se sale de rango (mayor que 32767 o menor que -32767).");
 	}
+<<<<<<< HEAD
 	public void error8(int entero, long real) {
 		escribirTexto( "Error en la linea "+nLinea+": Error léxico: El valor del float "+entero+"."+real+" se sale del rango máximo (mayor que 117549436.0 o menor que -117549436.0).");
 	}
 
+=======
+	public void error8(double real) {
+		escribirTexto( "Error en la linea "+nLinea+": Error léxico: El valor del float "+real+" se sale del rango máximo (mayor que 117549436.0 o menor que -117549436.0).");
+	}
+>>>>>>> 1db2de38b3ff7c9fe3dd2f6f7a82553873193b90
 	private void escribirTexto(String string) {
 		try (FileWriter escritor = new FileWriter(fichero, true)) {
 			escritor.write(string + "\n");

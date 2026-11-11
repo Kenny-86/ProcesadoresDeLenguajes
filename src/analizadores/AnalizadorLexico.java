@@ -204,21 +204,19 @@ public class AnalizadorLexico {
 		real = 0;
 		contadorDecimal=0;
 	}
-
-	public static void main(String[] args) {
-		AnalizadorLexico anl = new AnalizadorLexico("ficheroTexto.txt");
+	public void analisis() {
 		GestorErrores gestorErr = new GestorErrores();
-		ArrayList<Character> texto = anl.lector();
+		ArrayList<Character> texto = lector();
 
 		int i = 0;
 		while (i < texto.size()) {
 			char caracter = texto.get(i);
-			anl.columnaActual = obtenerColumna(caracter);
+			columnaActual = obtenerColumna(caracter);
 
-			int estadoSiguiente = transiciones[anl.estado][anl.columnaActual];
-			String accionActual = acciones[anl.estado][anl.columnaActual];
-			anl.ejecutarAcciones(accionActual, caracter, gestorErr);
-			anl.estado = (estadoSiguiente >= 12) ? 0 : estadoSiguiente;
+			int estadoSiguiente = transiciones[estado][columnaActual];
+			String accionActual = acciones[estado][columnaActual];
+			ejecutarAcciones(accionActual, caracter, gestorErr);
+			estado = (estadoSiguiente >= 12) ? 0 : estadoSiguiente;
 
 			// Solo se avanza si la accion lee o da error
 			boolean consume = accionActual.contains("L")|| accionActual.contains("E");
@@ -232,15 +230,19 @@ public class AnalizadorLexico {
 
 		// Fin de fichero (columna 9). Puede hacer falta dos pasadas: la primera cierra el
 		// token pendiente (si lo hay) y la segunda emite el token eof.
-		anl.columnaActual = 9;
-			String accionActual = acciones[anl.estado][9];
-			int estadoSiguiente = transiciones[anl.estado][9];
-			anl.ejecutarAcciones(accionActual, ' ', gestorErr);
-			anl.estado = (estadoSiguiente >= 12) ? 0 : estadoSiguiente;
+		columnaActual = 9;
+			String accionActual = acciones[estado][9];
+			int estadoSiguiente = transiciones[estado][9];
+			ejecutarAcciones(accionActual, ' ', gestorErr);
+			estado = (estadoSiguiente >= 12) ? 0 : estadoSiguiente;
 			//anl.ejecutarAcciones("GT17", ' ', gestorErr);
 
-		anl.escribirTabla(anl.gestor, TS_Gestor.Tabla.GLOBAL);
-		anl.gestor.destroy(TS_Gestor.Tabla.GLOBAL);
+		escribirTabla(gestor, TS_Gestor.Tabla.GLOBAL);
+		gestor.destroy(TS_Gestor.Tabla.GLOBAL);
+	}
+	public static void main(String[] args) {
+		AnalizadorLexico anl = new AnalizadorLexico("ficheroTexto.txt");
+		anl.analisis();
 	}
 
 	private static int obtenerColumna(char c) {
