@@ -156,30 +156,32 @@ public class AnalizadorLexico {
 		}
 	}
 
-	public void tokenStringEntero() {
-		escribirTexto("< entero, " + entero + " >");
+	public Token tokenStringEntero() {
+		Token tk=new Token("entero", ""+entero);
 		entero = 0;
+		return tk;
 	}
 
-	public void tokenStringReal() {
+	public Token tokenStringReal() {
 		// Aqui pasamos a String pero podemos calcular el valor del real con la fórmula de  entero+real*Math.pow(10, -contadorDecimal)
 		//String.format("%."+contadorDecimal+"f",(entero+real*Math.pow(10, -contadorDecimal)) ).replace(',', '.');
-		escribirTexto("< real, " +entero+"."+real+ " >");
+		Token tk=new Token("real", ""+(entero+real));
 		entero=0;
 		real = 0;
 		contadorDecimal = 0;
+		return tk;
 	}
 
-	public void tokenStringId(int posTS) {
-		escribirTexto("< id, " + posTS + " >");
+	public Token tokenStringId(int posTS) {
+		return new Token("id", ""+posTS);
 	}
 
-	public void tokenStringCadCAr() {
-		escribirTexto("< cadena, " + lexema + " >");
+	public Token tokenStringCadCAr() {
+		return new Token("cadena", lexema);
 	}
 
-	public void tokenStringPalabraReservada(String nombre) {
-		escribirTexto("< " + nombre + ", >");
+	public Token tokenStringPalabraReservada(String nombre) {
+		return new Token("nombre", "");
 	}
 
 	public void concatenarNumeroEnt(char num) {
