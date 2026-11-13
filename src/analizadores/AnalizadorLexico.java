@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import tslib.*;
+import auxiliar.*;
 
 public class AnalizadorLexico {
 	private String direccion;
@@ -18,6 +19,8 @@ public class AnalizadorLexico {
 	private int columnaActual;
 	private int contadorDecimal;
 	private TS_Gestor gestor = new TS_Gestor("TablaSimbolos.txt");
+	ArrayList<Character> texto;
+	private int cont;
 
 	/* Columnas: 0 letra, 1 digito, 2 '_', 3 '+', 4 '-', 5 '|', 6 '=', 7 '*', 8 '/',
 	 * 9 EOF, 10 '"', 11 blanco/tab/salto, 12 ',', 13 ';', 14 '(', 15 ')', 16 '{', 17 '}',
@@ -65,6 +68,8 @@ public class AnalizadorLexico {
 		crearTPalRes(gestor); // primero las palabras reservadas
 		crearAtributos(gestor);
 		crearTablaGlobal(gestor); // despues la tabla global
+		texto = lector();
+		cont=0;
 	}
 
 	public void crearAtributos(TS_Gestor gestor) {
@@ -157,35 +162,35 @@ public class AnalizadorLexico {
 	}
 
 	public Token tokenStringEntero() {
-		Token tk=new Token("entero", ""+entero);
+		Token tk = new Token("entero", ""+entero);
 		entero = 0;
 		return tk;
 	}
 
 	public Token tokenStringReal() {
-		// Aqui pasamos a String pero podemos calcular el valor del real con la fórmula de  entero+real*Math.pow(10, -contadorDecimal)
-		//String.format("%."+contadorDecimal+"f",(entero+real*Math.pow(10, -contadorDecimal)) ).replace(',', '.');
-		Token tk=new Token("real", ""+entero+"."+real);
-		entero=0;
-		real = 0;
-		contadorDecimal = 0;
-		return tk;
-	}
+        // Aqui pasamos a String pero podemos calcular el valor del real con la fórmula de  entero+realMath.pow(10, -contadorDecimal)
+        //String.format("%."+contadorDecimal+"f",(entero+realMath.pow(10, -contadorDecimal)) ).replace(',', '.');
+        Token tk=new Token("real", ""+entero+"."+real);
+        entero=0;
+        real = 0;
+        contadorDecimal = 0;
+        return tk;
+    }
 
 	public Token tokenStringId(int posTS) {
+		lexema="";
 		return new Token("id", ""+posTS);
 	}
 
 	public Token tokenStringCadCAr() {
-		Token tk=new Token("cadena", lexema);
+		Token tk= new Token("cadena", lexema);
 		lexema="";
 		return tk;
 	}
 
 	public Token tokenStringPalabraReservada(String nombre) {
-		Token tk=new Token("nombre", "");
-		nombre="";
-		return tk;
+		lexema="";
+		return new Token("nombre", "");
 	}
 
 	public void concatenarNumeroEnt(char num) {
@@ -210,18 +215,17 @@ public class AnalizadorLexico {
 		real = 0;
 		contadorDecimal=0;
 	}
-	public void analisis() {
+	
+	public Token analisis() {
 		GestorErrores gestorErr = new GestorErrores();
-		ArrayList<Character> texto = lector();
-
-		int i = 0;
-		while (i < texto.size()) {
-			char caracter = texto.get(i);
+		Token tk = null;
+		while (cont< texto.size()) {
+			char caracter = texto.get(cont);
 			columnaActual = obtenerColumna(caracter);
 
 			int estadoSiguiente = transiciones[estado][columnaActual];
 			String accionActual = acciones[estado][columnaActual];
-			ejecutarAcciones(accionActual, caracter, gestorErr);
+			tk =ejecutarAcciones(accionActual, caracter, gestorErr);
 			estado = (estadoSiguiente >= 12) ? 0 : estadoSiguiente;
 
 			// Solo se avanza si la accion lee o da error
@@ -230,7 +234,10 @@ public class AnalizadorLexico {
 				if (caracter == '\n') {
 					gestorErr.siguienteLinea();
 				}
-				i++;
+				cont++;
+			}
+			if(tk!=null) {
+			return tk;
 			}
 		}
 
@@ -244,8 +251,9 @@ public class AnalizadorLexico {
 			//anl.ejecutarAcciones("GT17", ' ', gestorErr);
 
 		escribirTabla(gestor, TS_Gestor.Tabla.GLOBAL);
-		gestor.destroy(TS_Gestor.Tabla.GLOBAL);
+		return tokenStringPalabraReservada("eof") ;
 	}
+	
 	public static void main(String[] args) {
 		AnalizadorLexico anl = new AnalizadorLexico("ficheroTexto.txt");
 		anl.analisis();
@@ -277,9 +285,9 @@ public class AnalizadorLexico {
 		}
 	}
 
-	public void ejecutarAcciones(String accion, char caracter, GestorErrores gestorErr) {
+	public Token ejecutarAcciones(String accion, char caracter, GestorErrores gestorErr) {
 		if (accion.isEmpty()) {
-			return;
+			return null;
 		}
 		String[] listaAcciones = accion.split(";");
 		for (String accionPosible : listaAcciones) {
@@ -294,7 +302,7 @@ public class AnalizadorLexico {
 					reiniciarAcumuladores();
 				}
 				else {
-				tokenStringEntero(); 
+				return tokenStringEntero(); 
 				}
 				break;
 			case "GT2":
@@ -303,7 +311,7 @@ public class AnalizadorLexico {
 					reiniciarAcumuladores();
 				}
 				else {
-				tokenStringReal(); }
+				return tokenStringReal(); }
 				break;
 
 			case "GT3":
@@ -312,36 +320,38 @@ public class AnalizadorLexico {
 					if (pos == 0) {                        // ya estaba en la tabla
 						pos = gestor.getEntradaTSGlobal(lexema);
 					}
-					tokenStringId(pos);
-				} else {
-					tokenStringPalabraReservada(lexema);
+					return tokenStringId(pos);
+				} 
+				else {
+					return tokenStringPalabraReservada(lexema);
 				}
-				lexema = "";
-				break;
-			case "GT4": tokenStringPalabraReservada("suma"); break;
-			case "GT5": tokenStringPalabraReservada("preIncremento"); break;
-			case "GT6": tokenStringPalabraReservada("resta"); break;
-			case "GT7": tokenStringPalabraReservada("or"); break;
-			case "GT8": tokenStringPalabraReservada("asignacion"); break;
-			case "GT9": tokenStringPalabraReservada("igualdad"); break;
+			case "GT4": return tokenStringPalabraReservada("suma");
+			case "GT5": return tokenStringPalabraReservada("preIncremento"); 
+			case "GT6": return tokenStringPalabraReservada("resta"); 
+			case "GT7": return tokenStringPalabraReservada("or");
+			case "GT8": return tokenStringPalabraReservada("asignacion");
+			case "GT9": return tokenStringPalabraReservada("igualdad"); 
 			case "GT10":
-				if(lexema.length()>66) {//contamos la longitud de la cadema para ver si es válida, incluye las comillas
+				if(lexema.length()<66) {//contamos la longitud de la cadema para ver si es válida, incluye las comillas
 					gestorErr.error6(lexema);
 					lexema="";}
-				tokenStringCadCAr();lexema = "";break;
-			case "GT11": tokenStringPalabraReservada("coma"); break;
-			case "GT12": tokenStringPalabraReservada("puntoComa"); break;
-			case "GT13": tokenStringPalabraReservada("abrirParentesis"); break;
-			case "GT14": tokenStringPalabraReservada("cerrarParentesis"); break;
-			case "GT15": tokenStringPalabraReservada("abrirLlave"); break;
-			case "GT16": tokenStringPalabraReservada("cerrarLlave"); break;
-			case "GT17": tokenStringPalabraReservada("eof"); break;
-			case "E1": gestorErr.error1(caracter); reiniciarAcumuladores(); break;
-			case "E2": gestorErr.error2(); reiniciarAcumuladores(); break;
-			case "E3": gestorErr.error3(entero, caracter); reiniciarAcumuladores(); break;
-			case "E4": gestorErr.error4(lexema+caracter); reiniciarAcumuladores(); break;
-			case "E5": gestorErr.error5(); reiniciarAcumuladores(); break;
+				else{
+					return tokenStringCadCAr();
+				}break;
+			case "GT11": return tokenStringPalabraReservada("coma"); 
+			case "GT12": return tokenStringPalabraReservada("puntoComa");
+			case "GT13": return tokenStringPalabraReservada("abrirParentesis");
+			case "GT14": return tokenStringPalabraReservada("cerrarParentesis");
+			case "GT15": return tokenStringPalabraReservada("abrirLlave"); 
+			case "GT16": return tokenStringPalabraReservada("cerrarLlave"); 
+			case "GT17": return tokenStringPalabraReservada("eof"); 
+			case "E1": gestorErr.error1(caracter); reiniciarAcumuladores(); 
+			case "E2": gestorErr.error2(); reiniciarAcumuladores(); 
+			case "E3": gestorErr.error3(entero, caracter); reiniciarAcumuladores();
+			case "E4": gestorErr.error4(lexema+caracter); reiniciarAcumuladores(); 
+			case "E5": gestorErr.error5(); reiniciarAcumuladores(); 
 			}
 		}
+		return null;
 	}
 }
