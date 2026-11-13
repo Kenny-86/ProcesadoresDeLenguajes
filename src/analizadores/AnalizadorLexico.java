@@ -183,7 +183,9 @@ public class AnalizadorLexico {
 	}
 
 	public Token tokenStringPalabraReservada(String nombre) {
-		return new Token("nombre", "");
+		Token tk=new Token("nombre", "");
+		nombre="";
+		return tk;
 	}
 
 	public void concatenarNumeroEnt(char num) {
