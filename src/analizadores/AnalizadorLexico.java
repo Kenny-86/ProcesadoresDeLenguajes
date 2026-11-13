@@ -165,7 +165,7 @@ public class AnalizadorLexico {
 	public Token tokenStringReal() {
 		// Aqui pasamos a String pero podemos calcular el valor del real con la fórmula de  entero+real*Math.pow(10, -contadorDecimal)
 		//String.format("%."+contadorDecimal+"f",(entero+real*Math.pow(10, -contadorDecimal)) ).replace(',', '.');
-		Token tk=new Token("real", ""+(entero+real));
+		Token tk=new Token("real", ""+entero+"."+real);
 		entero=0;
 		real = 0;
 		contadorDecimal = 0;
