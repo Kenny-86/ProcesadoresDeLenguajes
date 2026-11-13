@@ -177,7 +177,9 @@ public class AnalizadorLexico {
 	}
 
 	public Token tokenStringCadCAr() {
-		return new Token("cadena", lexema);
+		Token tk=new Token("cadena", lexema);
+		lexema="";
+		return tk;
 	}
 
 	public Token tokenStringPalabraReservada(String nombre) {
