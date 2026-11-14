@@ -21,6 +21,7 @@ public class AnalizadorLexico {
 	private TS_Gestor gestor = new TS_Gestor("TablaSimbolos.txt");
 	ArrayList<Character> texto;
 	private int cont;
+	GestorErrores gestorErr = new GestorErrores();
 
 	/* Columnas: 0 letra, 1 digito, 2 '_', 3 '+', 4 '-', 5 '|', 6 '=', 7 '*', 8 '/',
 	 * 9 EOF, 10 '"', 11 blanco/tab/salto, 12 ',', 13 ';', 14 '(', 15 ')', 16 '{', 17 '}',
@@ -70,6 +71,7 @@ public class AnalizadorLexico {
 		crearTablaGlobal(gestor); // despues la tabla global
 		texto = lector();
 		cont=0;
+		gestorErr = new GestorErrores();
 	}
 
 	public void crearAtributos(TS_Gestor gestor) {
@@ -190,7 +192,7 @@ public class AnalizadorLexico {
 
 	public Token tokenStringPalabraReservada(String nombre) {
 		lexema="";
-		return new Token("nombre", "");
+		return new Token(nombre, "");
 	}
 
 	public void concatenarNumeroEnt(char num) {
@@ -217,7 +219,7 @@ public class AnalizadorLexico {
 	}
 	
 	public Token analisis() {
-		GestorErrores gestorErr = new GestorErrores();
+		
 		Token tk = null;
 		while (cont< texto.size()) {
 			char caracter = texto.get(cont);
@@ -256,7 +258,9 @@ public class AnalizadorLexico {
 	
 	public static void main(String[] args) {
 		AnalizadorLexico anl = new AnalizadorLexico("ficheroTexto.txt");
-		anl.analisis();
+		for (int i=0; i<100; i++) {
+		System.out.println(anl.analisis().toString()); 
+		}
 	}
 
 	private static int obtenerColumna(char c) {
@@ -354,4 +358,5 @@ public class AnalizadorLexico {
 		}
 		return null;
 	}
+
 }
