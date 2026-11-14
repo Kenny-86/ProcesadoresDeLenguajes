@@ -1,15 +1,19 @@
 package analizadores;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
 
 public class AnalizadorSintactico {
-	private final String[] terminales= {"if","(", ")","for","id", "=",";","{", "}", "let", "int", "float", "boolean", "string", "function", "void", "||",
+	/*private final String[] terminales= {"if","(", ")","for","id", "=",";","{", "}", "let", "int", "float", "boolean", "string", "function", "void", "||",
 			"==", "+", "-", ",", "echo", "prompt", "return", "ent", "cad", "real", "veracidad", "++"};
 	private final String[] noTerminales = {"P", "B", "F", "E","E1","G","T","D","U","U1","H","A","C","S","S1","L","R","R1","V","V1","Q","X","K" };
+	*/
 	private final String axioma = "P";
 	private AnalizadorLexico aLexico;
+	private GestorErrores gestErr;
 	private Stack<String> pila;
 	private final String[][] M= {
 			// A
@@ -89,7 +93,8 @@ public class AnalizadorSintactico {
 	private final HashMap<String, Integer> traductorTerminales= new HashMap<>();
 
 	public AnalizadorSintactico(String dir) {
-		aLexico=new AnalizadorLexico(dir);
+		gestErr=new GestorErrores();
+		aLexico=new AnalizadorLexico(dir, gestErr);
 		pila=new Stack<>();
 		//rellenarlo 
 		rellenarTraductores();
@@ -98,38 +103,32 @@ public class AnalizadorSintactico {
 
 
 
-	public ArrayList<Integer>analizar() {
+	public ArrayList<Integer>analisisSi() {
 		pila.clear();
 		parse.clear();
 		pila.push("$");
 		pila.push(axioma);
 		//el token nos lo tiene que dar el analizador léxico
-		String token = aLexico.analisis().getCodToken();
+		String token = aLexico.analisisL().simbolo();
 	
 		while(!pila.peek().equals("$")) {
 			String tope = pila.peek();
-			System.out.println(token);
+			System.out.println(tope);
 			int columna = traductorTerminales.get(token);
-			if (esTerminal(tope)) {
+			if (traductorTerminales.containsKey(tope)) { //el tope es terminal
 				pila.pop();
 				if (tope.equals(token)) {
-					token=aLexico.analisis().getCodToken();
+					token=aLexico.analisisL().simbolo();
 				}
 				else {
-					//llamada al gestor de errores
+					gestErr.error9(token, tope);
 				}
 			}
-			else {
+			else {//el tope no es terminal
 				int fila = traductorNoTerminales.get(tope);
 				pila.pop();
 				if(M[fila][columna].contains("err")) {
-					//llamar al gestor de errores
-					//seguramente no sea una cadena vacía sino un identificador del error específico
-					System.out.println(fila+", "+columna+": "+M[fila][columna]);
-					for(Integer ent: parse) {
-						System.out.println(ent);
-					}
-					throw new IllegalArgumentException("Tuvimos un errorsito");
+					llamadaError(M[fila][columna]);
 				}
 				parse.addLast(nRegla[fila][columna]);
 				String consecuente=M[fila][columna];
@@ -141,29 +140,37 @@ public class AnalizadorSintactico {
 				}
 			}
 		}
-		if(!pila.empty()) {
-			//llamada al gestor de errores?
+		if(!token.equals("$")) {
+			gestErr.errorN(token);
 		}
 		return parse;
 	}
-	private boolean esTerminal(String token) {
-        boolean res=false;
-        for(int i=0; i<terminales.length&&!res; i++) {
-            res=terminales[i].equals(token);
-        }
-        return res;
-    }
+
+
+
+	private void llamadaError(String error) {
+		switch(error) {
+		default: throw new IllegalArgumentException("Se leyó el error: "+error);
+		}
+	}
 
 
 
 	public static void main(String[] args) {
 		AnalizadorSintactico aS = new AnalizadorSintactico("ficherotexto.txt");
-		ArrayList<Integer>parse=aS.analizar();
+		ArrayList<Integer>parse=aS.analisisSi();
+		aS.escribirTexto("D");
 		for(Integer ent: parse) {
-			System.out.println(ent);
+			aS.escribirTexto(""+ent);
 		}
 	}
-
+	private void escribirTexto(String string) {
+		try (FileWriter escritor = new FileWriter("parse.txt", true)) {
+			escritor.write(string + " ");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	private void rellenarTraductores() {
 		//hacer todos los puts
 		traductorNoTerminales.put("A", 0);
@@ -190,19 +197,19 @@ public class AnalizadorSintactico {
 		traductorNoTerminales.put("V1", 21);
 		traductorNoTerminales.put("X", 22);
 
-		traductorTerminales.put("abrirParentesis", 0);
-		traductorTerminales.put("cerrarParentesis", 1);
-		traductorTerminales.put("suma", 2);
-		traductorTerminales.put("preIncremento", 3);
-		traductorTerminales.put("coma", 4);
-		traductorTerminales.put("resta", 5);
-		traductorTerminales.put("puntoComa", 6);
-		traductorTerminales.put("asignacion", 7);
-		traductorTerminales.put("igualdad", 8);
+		traductorTerminales.put("(", 0);
+		traductorTerminales.put(")", 1);
+		traductorTerminales.put("+", 2);
+		traductorTerminales.put("++", 3);
+		traductorTerminales.put(",", 4);
+		traductorTerminales.put("-", 5);
+		traductorTerminales.put(";", 6);
+		traductorTerminales.put("=", 7);
+		traductorTerminales.put("==", 8);
 		traductorTerminales.put("boolean", 9);
 		traductorTerminales.put("cad", 10);
 		traductorTerminales.put("echo", 11);
-		traductorTerminales.put("entero", 12);
+		traductorTerminales.put("ent", 12);
 		traductorTerminales.put("float", 13);
 		traductorTerminales.put("for", 14);
 		traductorTerminales.put("function", 15);
@@ -214,13 +221,12 @@ public class AnalizadorSintactico {
 		traductorTerminales.put("real", 21);
 		traductorTerminales.put("return", 22);
 		traductorTerminales.put("string", 23);
-		traductorTerminales.put("true", 24);
-		traductorTerminales.put("false", 24);
+		traductorTerminales.put("veracidad", 24);
 		traductorTerminales.put("void", 25);
-		traductorTerminales.put("abrirLlave", 26);
-		traductorTerminales.put("or", 27);
-		traductorTerminales.put("cerrarLlave", 28);
-		traductorTerminales.put("eof", 29);
+		traductorTerminales.put("{", 26);
+		traductorTerminales.put("||", 27);
+		traductorTerminales.put("}", 28);
+		traductorTerminales.put("$", 29);
 	}
 
 

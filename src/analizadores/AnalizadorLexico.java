@@ -21,7 +21,7 @@ public class AnalizadorLexico {
 	private TS_Gestor gestor = new TS_Gestor("TablaSimbolos.txt");
 	ArrayList<Character> texto;
 	private int cont;
-	GestorErrores gestorErr = new GestorErrores();
+	private GestorErrores gestorErr ;
 
 	/* Columnas: 0 letra, 1 digito, 2 '_', 3 '+', 4 '-', 5 '|', 6 '=', 7 '*', 8 '/',
 	 * 9 EOF, 10 '"', 11 blanco/tab/salto, 12 ',', 13 ';', 14 '(', 15 ')', 16 '{', 17 '}',
@@ -58,7 +58,7 @@ public class AnalizadorLexico {
 			/*11*/{"L","L","L","L","L","L","L","L","L","E2","L","L","L","L","L","L","L","L","L","L"}
 	};
 
-	public AnalizadorLexico(String dir) {
+	public AnalizadorLexico(String dir, GestorErrores gestErr) {
 		direccion = dir;
 		lexema = "";
 		entero = 0;
@@ -71,7 +71,7 @@ public class AnalizadorLexico {
 		crearTablaGlobal(gestor); // despues la tabla global
 		texto = lector();
 		cont=0;
-		gestorErr = new GestorErrores();
+		this.gestorErr = gestErr;
 	}
 
 	public void crearAtributos(TS_Gestor gestor) {
@@ -218,8 +218,7 @@ public class AnalizadorLexico {
 		contadorDecimal=0;
 	}
 	
-	public Token analisis() {
-		
+	public Token analisisL() {
 		Token tk = null;
 		while (cont< texto.size()) {
 			char caracter = texto.get(cont);
@@ -255,13 +254,17 @@ public class AnalizadorLexico {
 		escribirTabla(gestor, TS_Gestor.Tabla.GLOBAL);
 		return tokenStringPalabraReservada("eof") ;
 	}
-	
-	public static void main(String[] args) {
-		AnalizadorLexico anl = new AnalizadorLexico("ficheroTexto.txt");
-		for (int i=0; i<100; i++) {
-		System.out.println(anl.analisis().toString()); 
-		}
+	public static void main (String[] args) {
+		GestorErrores gestErr = new GestorErrores();
+		AnalizadorLexico aL = new AnalizadorLexico("ficheroTexto.txt", gestErr);
+		Token tk = aL.analisisL();
+		while(!tk.getCodToken().equals("eof")) {
+			aL.escribirTexto(tk.toString());
+			tk = aL.analisisL();
+			}
+		aL.escribirTexto(tk.toString());
 	}
+	
 
 	private static int obtenerColumna(char c) {
 		if (Character.isLetter(c)) return 0;
@@ -358,5 +361,13 @@ public class AnalizadorLexico {
 		}
 		return null;
 	}
+	/*
+	public static void main(String[] args) {
+		AnalizadorLexico anl = new AnalizadorLexico("ficheroTexto.txt");
+		for (int i=0; i<100; i++) {
+		System.out.println(anl.analisis().toString()); 
+		}
+	}
+	*/
 
 }

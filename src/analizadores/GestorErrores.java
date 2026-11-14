@@ -41,7 +41,15 @@ public class GestorErrores {
 	public void error8(int entero, long real) {
 		escribirTexto( "Error en la linea "+nLinea+": Error léxico: El valor del float "+entero+"."+real+" se sale del rango máximo (mayor que 117549436.0 o menor que -117549436.0).");
 	}
+	
+	public void error9(String leido, String esperado) {
+		escribirTexto("Error en la linea "+nLinea+": Error sintáctico: Se leyó el token "+ leido+ " pero se esperaba el token " +esperado+".");
+	}
 
+	
+	public void errorN(String token) {
+		escribirTexto("Error en la linea "+nLinea+": Error sintáctico: Se leyeron tokens sobrantes a partir del token "+token+".");
+	}
 	private void escribirTexto(String string) {
 		try (FileWriter escritor = new FileWriter(fichero, true)) {
 			escritor.write(string + "\n");
