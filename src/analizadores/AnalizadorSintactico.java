@@ -74,6 +74,60 @@ public ArrayList<Integer>analizar() {
 	
 	private void rellenarTraductores() {
 //hacer todos los puts
+		traductorNoTerminales.put("A", 0);
+		traductorNoTerminales.put("B", 1);
+		traductorNoTerminales.put("C", 2);
+		traductorNoTerminales.put("D", 3);
+		traductorNoTerminales.put("E", 4);
+		traductorNoTerminales.put("E1", 5);
+		traductorNoTerminales.put("F", 6);
+		traductorNoTerminales.put("G", 7);
+		traductorNoTerminales.put("H", 9);
+		traductorNoTerminales.put("K", 10);
+		traductorNoTerminales.put("L", 11);
+		traductorNoTerminales.put("P", 12);
+		traductorNoTerminales.put("Q", 13);
+		traductorNoTerminales.put("R", 14);
+		traductorNoTerminales.put("R1", 15);
+		traductorNoTerminales.put("S", 16);
+		traductorNoTerminales.put("S1", 17);
+		traductorNoTerminales.put("T", 18);
+		traductorNoTerminales.put("U", 19);
+		traductorNoTerminales.put("U1", 20);
+		traductorNoTerminales.put("V", 21);
+		traductorNoTerminales.put("V1", 22);
+		traductorNoTerminales.put("X", 23);
+		
+		traductorTerminales.put("(", 0);
+		traductorTerminales.put(")", 1);
+		traductorTerminales.put("+", 2);
+		traductorTerminales.put("++", 3);
+		traductorTerminales.put(",", 4);
+		traductorTerminales.put("-", 5);
+		traductorTerminales.put(";", 6);
+		traductorTerminales.put("=", 7);
+		traductorTerminales.put("==", 8);
+		traductorTerminales.put("boolean", 9);
+		traductorTerminales.put("cad", 10);
+		traductorTerminales.put("echo", 11);
+		traductorTerminales.put("ent", 12);
+		traductorTerminales.put("float", 13);
+		traductorTerminales.put("for", 14);
+		traductorTerminales.put("function", 15);
+		traductorTerminales.put("id", 16);
+		traductorTerminales.put("if", 17);
+		traductorTerminales.put("int", 18);
+		traductorTerminales.put("let", 19);
+		traductorTerminales.put("prompt", 20);
+		traductorTerminales.put("real", 21);
+		traductorTerminales.put("return", 22);
+		traductorTerminales.put("string", 23);
+		traductorTerminales.put("veracidad", 24);
+		traductorTerminales.put("void", 25);
+		traductorTerminales.put("{", 26);
+		traductorTerminales.put("||", 27);
+		traductorTerminales.put("}", 28);
+		traductorTerminales.put("$", 29);
 	}
 
 }
