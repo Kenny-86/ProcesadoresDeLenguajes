@@ -19,10 +19,10 @@ public class AnalizadorLexico {
 	private int columnaActual;
 	private int contadorDecimal;
 	private TS_Gestor gestor = new TS_Gestor("TablaSimbolos.txt");
-	ArrayList<Character> texto;
+	private ArrayList<Character> texto;
 	private int cont;
 	private GestorErrores gestorErr ;
-
+	private int longiCadena;
 	/* Columnas: 0 letra, 1 digito, 2 '_', 3 '+', 4 '-', 5 '|', 6 '=', 7 '*', 8 '/',
 	 * 9 EOF, 10 '"', 11 blanco/tab/salto, 12 ',', 13 ';', 14 '(', 15 ')', 16 '{', 17 '}',
 	 * 18 '.', 19 otro.
@@ -181,17 +181,20 @@ public class AnalizadorLexico {
 
 	public Token tokenStringId(int posTS) {
 		lexema="";
+		longiCadena=0;
 		return new Token("id", ""+posTS);
 	}
 
 	public Token tokenStringCadCAr() {
 		Token tk= new Token("cadena", lexema);
 		lexema="";
+		longiCadena=0;
 		return tk;
 	}
 
 	public Token tokenStringPalabraReservada(String nombre) {
 		lexema="";
+		longiCadena=0;
 		return new Token(nombre, "");
 	}
 
@@ -209,6 +212,7 @@ public class AnalizadorLexico {
 
 	public void concatenarCaracteres(char caracter) {
 		lexema = lexema.concat("" + caracter);
+		longiCadena++;
 	}
 
 	private void reiniciarAcumuladores() {
@@ -216,6 +220,7 @@ public class AnalizadorLexico {
 		entero = 0;
 		real = 0;
 		contadorDecimal=0;
+		longiCadena=0;
 	}
 	
 	public Token analisisL() {
@@ -339,9 +344,9 @@ public class AnalizadorLexico {
 			case "GT8": return tokenStringPalabraReservada("asignacion");
 			case "GT9": return tokenStringPalabraReservada("igualdad"); 
 			case "GT10":
-				if(lexema.length()>66) {//contamos la longitud de la cadema para ver si es válida, incluye las comillas
+				if(longiCadena>66) {//contamos la longitud de la cadema para ver si es válida, incluye las comillas
 					gestorErr.error6(lexema);
-					lexema="";}
+					reiniciarAcumuladores();}
 				else{
 					return tokenStringCadCAr();
 				}break;
@@ -361,13 +366,6 @@ public class AnalizadorLexico {
 		}
 		return null;
 	}
-	/*
-	public static void main(String[] args) {
-		AnalizadorLexico anl = new AnalizadorLexico("ficheroTexto.txt");
-		for (int i=0; i<100; i++) {
-		System.out.println(anl.analisis().toString()); 
-		}
-	}
-	*/
+	
 
 }
