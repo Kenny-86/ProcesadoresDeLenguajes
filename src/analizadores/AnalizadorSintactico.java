@@ -25,7 +25,7 @@ public class AnalizadorSintactico {
 			// D
 			{"err1", "err1", "err1", "err1", "err1", "err1", "", "=:U", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1"},
 			// E
-			{"R:E1", "err1", "err1", "R:E1", "err1", "err1", "err1", "err1", "err1", "err1", "R:E1", "err1", "R:E1", "err1", "err1", "err1", "R:E1", "err1", "err1", "err1", "err1", "R:E1", "err1", "err1", "R:E1", "err1", "err1", "err1", "err1", "err1"},
+			{"R:E1", "err1", "err1", "R:E1", "err1", "err1", "err10", "err1", "err1", "err1", "R:E1", "err1", "R:E1", "err1", "err1", "err1", "R:E1", "err1", "err1", "err1", "err1", "R:E1", "err1", "err1", "R:E1", "err1", "err1", "err1", "err1", "err1"},
 			// E1
 			{"err1", "", "err1", "err1", "", "err1", "", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "||:R:E1", "err1", "err1"},
 			// F
@@ -128,6 +128,7 @@ public class AnalizadorSintactico {
 				int fila = traductorNoTerminales.get(tope);
 				pila.pop();
 				if(M[fila][columna].contains("err")) {
+					System.out.println(fila+", "+columna);
 					llamadaError(M[fila][columna]);
 				}
 				parse.addLast(nRegla[fila][columna]);
@@ -150,6 +151,7 @@ public class AnalizadorSintactico {
 
 	private void llamadaError(String error) {
 		switch(error) {
+		case "err10": gestErr.error10();
 		default: throw new IllegalArgumentException("Se leyó el error: "+error);
 		}
 	}

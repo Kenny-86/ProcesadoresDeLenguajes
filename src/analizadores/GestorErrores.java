@@ -45,7 +45,9 @@ public class GestorErrores {
 	public void error9(String leido, String esperado) {
 		escribirTexto("Error en la linea "+nLinea+": Error sintáctico: Se leyó el token "+ leido+ " pero se esperaba el token " +esperado+".");
 	}
-
+	public void error10() {
+		escribirTexto("Error en la linea "+nLinea+": Error sintáctico: Se esperaba un argumento para la función echo.");
+	}
 	
 	public void errorN(String token) {
 		escribirTexto("Error en la linea "+nLinea+": Error sintáctico: Se leyeron tokens sobrantes a partir del token "+token+".");

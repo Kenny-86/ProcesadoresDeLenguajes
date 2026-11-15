@@ -339,7 +339,7 @@ public class AnalizadorLexico {
 			case "GT8": return tokenStringPalabraReservada("asignacion");
 			case "GT9": return tokenStringPalabraReservada("igualdad"); 
 			case "GT10":
-				if(lexema.length()<66) {//contamos la longitud de la cadema para ver si es válida, incluye las comillas
+				if(lexema.length()>66) {//contamos la longitud de la cadema para ver si es válida, incluye las comillas
 					gestorErr.error6(lexema);
 					lexema="";}
 				else{
