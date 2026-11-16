@@ -68,6 +68,26 @@ public class GestorErrores {
 	public void errorPC() {
 		escribirTexto("Error en la linea "+nLinea+" Error sintáctico: Se esperaba fin de expresión");
 	}
+	
+	public void errorU1() {
+		escribirTexto("Error en la linea " +nLinea+ "Error sintáctico:Se esperaba '+' , '-' o el final de la expresión");
+	}
+	
+	public void errorV1() {
+		escribirTexto("Error en la linea " +nLinea+ "Error sintáctico:Se esperaba un '(' para llamar a la función, o el final del operando");
+	}
+	
+	public void errorL() {
+		escribirTexto("Error en la linea " +nLinea+ "Error sintáctico:Se esperaban los argumentos de la función o ')' si no hay ninguno");
+	}
+	
+	public void errorQ() {
+		escribirTexto("Error en la linea " +nLinea+ "Error sintáctico:Se esperaba una ',' después de un argumento, o ')' para cerrar la llamada");
+	}
+	
+	public void errorX() {
+		escribirTexto("Error en la linea " +nLinea+ "Error sintáctico:Se esperaba la expresión a devolver o ';' si no devuelve nada");
+	}
 	private void escribirTexto(String string) {
 		try (FileWriter escritor = new FileWriter(fichero, true)) {
 			escritor.write(string + "\n");
