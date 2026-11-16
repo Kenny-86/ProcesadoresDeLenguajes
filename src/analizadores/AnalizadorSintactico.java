@@ -10,58 +10,58 @@ public class AnalizadorSintactico {
 	/*private final String[] terminales= {"if","(", ")","for","id", "=",";","{", "}", "let", "int", "float", "boolean", "string", "function", "void", "||",
 			"==", "+", "-", ",", "echo", "prompt", "return", "ent", "cad", "real", "veracidad", "++"};
 	private final String[] noTerminales = {"P", "B", "F", "E","E1","G","T","D","U","U1","H","A","C","S","S1","L","R","R1","V","V1","Q","X","K" };
-	*/
+	 */
 	private final String axioma = "P";
 	private AnalizadorLexico aLexico;
 	private GestorErrores gestErr;
 	private Stack<String> pila;
 	private final String[][] M= {
 			// A
-			{"err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "id:T:K", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "void", "err1", "err1", "err1", "err1"},
+			{"err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "id:T:K", "err", "err", "err", "err", "err", "err", "err", "err", "void", "err", "err", "err", "err"},
 			// B
-			{"err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "S", "err1", "err1", "for:(:id:=:U:;:E:;:G:):{:C:}", "err1", "S", "if:(:E:):S", "err1", "let:id:T:D:;", "S", "err1", "S", "err1", "err1", "err1", "err1", "err1", "err1", "err1"},
+			{"err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "S", "err", "err", "for:(:id:=:U:;:E:;:G:):{:C:}", "err", "S", "if:(:E:):S", "err", "let:id:T:D:;", "S", "err", "S", "err", "err", "err", "err", "err", "err", "err"},
 			// C
-			{"err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "B:C", "err1", "err1", "B:C", "err1", "B:C", "B:C", "err1", "B:C", "B:C", "err1", "B:C", "err1", "err1", "err1", "err1", "err1", "", "err1"},
+			{"err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "B:C", "err", "err", "B:C", "err", "B:C", "B:C", "err", "B:C", "B:C", "err", "B:C", "err", "err", "err", "err", "err", "", "err"},
 			// D
-			{"err1", "err1", "err1", "err1", "err1", "err1", "", "=:U", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1"},
+			{"err", "err", "err", "err", "err", "err", "", "=:U", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err"},
 			// E
-			{"R:E1", "err1", "err1", "R:E1", "err1", "err1", "err10", "err1", "err1", "err1", "R:E1", "err1", "R:E1", "err1", "err1", "err1", "R:E1", "err1", "err1", "err1", "err1", "R:E1", "err1", "err1", "R:E1", "err1", "err1", "err1", "err1", "err1"},
+			{"R:E1", "err", "err", "R:E1", "err", "err", "err", "err", "err", "err", "R:E1", "err", "R:E1", "err", "err", "err", "R:E1", "err", "err", "err", "err", "R:E1", "err", "err", "R:E1", "err", "err", "err", "err", "err"},
 			// E1
-			{"err1", "", "err1", "err1", "", "err1", "", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "||:R:E1", "err1", "err1"},
+			{"err", "", "err", "err", "", "err", "", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "||:R:E1", "err", "err"},
 			// F
-			{"err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "function:id:H:(:A:):{:C:}", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1"},
+			{"err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "function:id:H:(:A:):{:C:}", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err"},
 			// G
-			{"err1", "", "err1", "++:id", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "id:=:E", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1"},
+			{"err", "", "err", "++:id", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "id:=:E", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err"},
 			// H
-			{"err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "T", "err1", "err1", "err1", "T", "err1", "err1", "err1", "err1", "T", "err1", "err1", "err1", "err1", "T", "err1", "void", "err1", "err1", "err1", "err1"},
+			{"err", "err", "err", "err", "err", "err", "err", "err", "err", "T", "err", "err", "err", "T", "err", "err", "err", "err", "T", "err", "err", "err", "err", "T", "err", "void", "err", "err", "err", "err"},
 			// K
-			{"err1", "", "err1", "err1", ",:id:T:K", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1"},
+			{"err", "", "err", "err", ",:id:T:K", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err"},
 			// L
-			{"E:Q", "", "err1", "E:Q", "err1", "err1", "err1", "err1", "err1", "err1", "E:Q", "err1", "E:Q", "err1", "err1", "err1", "E:Q", "err1", "err1", "err1", "err1", "E:Q", "err1", "err1", "E:Q", "err1", "err1", "err1", "err1", "err1"},
+			{"E:Q", "", "err", "E:Q", "err", "err", "err", "err", "err", "err", "E:Q", "err", "E:Q", "err", "err", "err", "E:Q", "err", "err", "err", "err", "E:Q", "err", "err", "E:Q", "err", "err", "err", "err", "err"},
 			// P
-			{"err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "B:P", "err1", "err1", "B:P", "F:P", "B:P", "B:P", "err1", "B:P", "B:P", "err1", "B:P", "err1", "err1", "err1", "err1", "err1", "err1", ""},
+			{"err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "B:P", "err", "err", "B:P", "F:P", "B:P", "B:P", "err", "B:P", "B:P", "err", "B:P", "err", "err", "err", "err", "err", "err", ""},
 			// Q
-			{"err1", "", "err1", "err1", ",:E:Q", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1"},
+			{"err", "", "err", "err", ",:E:Q", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err"},
 			// R
-			{"U:R1", "err1", "err1", "U:R1", "err1", "err1", "err1", "err1", "err1", "err1", "U:R1", "err1", "U:R1", "err1", "err1", "err1", "U:R1", "err1", "err1", "err1", "err1", "U:R1", "err1", "err1", "U:R1", "err1", "err1", "err1", "err1", "err1"},
+			{"U:R1", "err", "err", "U:R1", "err", "err", "err", "err", "err", "err", "U:R1", "err", "U:R1", "err", "err", "err", "U:R1", "err", "err", "err", "err", "U:R1", "err", "err", "U:R1", "err", "err", "err", "err", "err"},
 			// R1
-			{"err1", "", "err1", "err1", "", "err1", "", "err1", "==:U:R1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "", "err1", "err1"},
+			{"err", "", "err", "err", "", "err", "", "err", "==:U:R1", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "", "err", "err"},
 			// S
-			{"err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "echo:E:;", "err1", "err1", "err1", "err1", "id:S1", "err1", "err1", "err1", "prompt:id:;", "err1", "return:X:;", "err1", "err1", "err1", "err1", "err1", "err1", "err1"},
+			{"err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "echo:E:;", "err", "err", "err", "err", "id:S1", "err", "err", "err", "prompt:id:;", "err", "return:X:;", "err", "err", "err", "err", "err", "err", "err"},
 			// S1
-			{"(:L:):;", "err1", "err1", "err1", "err1", "err1", "err1", "=:E:;", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1"},
+			{"(:L:):;", "err", "err", "err", "err", "err", "err", "=:E:;", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err"},
 			// T
-			{"err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "boolean", "err1", "err1", "err1", "float", "err1", "err1", "err1", "err1", "int", "err1", "err1", "err1", "err1", "string", "err1", "err1", "err1", "err1", "err1", "err1"},
+			{"err", "err", "err", "err", "err", "err", "err", "err", "err", "boolean", "err", "err", "err", "float", "err", "err", "err", "err", "int", "err", "err", "err", "err", "string", "err", "err", "err", "err", "err", "err"},
 			// U
-			{"V:U1", "err1", "err1", "V:U1", "err1", "err1", "err1", "err1", "err1", "err1", "V:U1", "err1", "V:U1", "err1", "err1", "err1", "V:U1", "err1", "err1", "err1", "err1", "V:U1", "err1", "err1", "V:U1", "err1", "err1", "err1", "err1", "err1"},
+			{"V:U1", "err", "err", "V:U1", "err", "err", "err", "err", "err", "err", "V:U1", "err", "V:U1", "err", "err", "err", "V:U1", "err", "err", "err", "err", "V:U1", "err", "err", "V:U1", "err", "err", "err", "err", "err"},
 			// U1
-			{"err1", "", "+:V:U1", "err1", "", "-:V:U1", "", "err1", "", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "", "err1", "err1"},
+			{"err", "", "+:V:U1", "err", "", "-:V:U1", "", "err", "", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "", "err", "err"},
 			// V
-			{"(:E:)", "err1", "err1", "++:id", "err1", "err1", "err1", "err1", "err1", "err1", "cad", "err1", "ent", "err1", "err1", "err1", "id:V1", "err1", "err1", "err1", "err1", "real", "err1", "err1", "veracidad", "err1", "err1", "err1", "err1", "err1"},
+			{"(:E:)", "err", "err", "++:id", "err", "err", "err", "err", "err", "err", "cad", "err", "ent", "err", "err", "err", "id:V1", "err", "err", "err", "err", "real", "err", "err", "veracidad", "err", "err", "err", "err", "err"},
 			// V1
-			{"(:L:)", "", "", "err1", "", "", "", "err1", "", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "err1", "", "err1", "err1"},
+			{"(:L:)", "", "", "err", "", "", "", "err", "", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "", "err", "err"},
 			// X
-			{"E", "err1", "err1", "E", "err1", "err1", "", "err1", "err1", "err1", "E", "err1", "E", "err1", "err1", "err1", "E", "err1", "err1", "err1", "err1", "E", "err1", "err1", "E", "err1", "err1", "err1", "err1", "err1"}
+			{"E", "err", "err", "E", "err", "err", "", "err", "err", "err", "E", "err", "E", "err", "err", "err", "E", "err", "err", "err", "err", "E", "err", "err", "E", "err", "err", "err", "err", "err"}
 	};
 	private final int[][]nRegla= {
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 21, 0, 0, 0, 0 }, // A
@@ -110,7 +110,7 @@ public class AnalizadorSintactico {
 		pila.push(axioma);
 		//el token nos lo tiene que dar el analizador léxico
 		String token = aLexico.analisisL().simbolo();
-	
+
 		while(!pila.peek().equals("$")) {
 			String tope = pila.peek();
 			System.out.println(tope);
@@ -129,15 +129,16 @@ public class AnalizadorSintactico {
 				pila.pop();
 				if(M[fila][columna].contains("err")) {
 					System.out.println(fila+", "+columna);
-					llamadaError(M[fila][columna]);
+					llamadaError(fila);
+					return null;
 				}
 				parse.addLast(nRegla[fila][columna]);
 				String consecuente=M[fila][columna];
 				if(!consecuente.isEmpty()) {
 					String[]elementos = consecuente.split(":");
-				for(int i=elementos.length; i>0; --i) {
-					pila.push(elementos[i-1]);
-				}
+					for(int i=elementos.length; i>0; --i) {
+						pila.push(elementos[i-1]);
+					}
 				}
 			}
 		}
@@ -149,10 +150,31 @@ public class AnalizadorSintactico {
 
 
 
-	private void llamadaError(String error) {
-		switch(error) {
-		case "err10": gestErr.error10();
-		default: throw new IllegalArgumentException("Se leyó el error: "+error);
+	private void llamadaError(int fila) {
+		switch (fila) {
+		case 0: gestErr.errorA(); break;
+		case 1: gestErr.errorB(); break;
+		case 2: gestErr.errorC(); break;
+		case 3: gestErr.errorD(); break;
+		case 4: gestErr.errorExp(); break;
+		case 5: gestErr.errorPC(); break;
+		case 6: gestErr.errorF(); break;
+		case 7: gestErr.errorG(); break;
+		case 8: gestErr.errorH(); break;
+		case 9: gestErr.errorK(); break;
+		case 10: gestErr.errorL(); break;
+		case 11: gestErr.errorP(); break;
+		case 12: gestErr.errorQ(); break;
+		case 13: gestErr.errorExp(); break;
+		case 14: gestErr.errorPC(); break;
+		case 15: gestErr.errorS(); break;
+		case 16: gestErr.errorS1(); break;
+		case 17: gestErr.errorT(); break;
+		case 18: gestErr.errorExp(); break;
+		case 19: gestErr.errorPC(); break;
+		case 20: gestErr.errorExp(); break;
+		case 21: gestErr.errorV1(); break;
+		case 22: gestErr.errorX(); break;
 		}
 	}
 
@@ -161,9 +183,14 @@ public class AnalizadorSintactico {
 	public static void main(String[] args) {
 		AnalizadorSintactico aS = new AnalizadorSintactico("ficherotexto.txt");
 		ArrayList<Integer>parse=aS.analisisSi();
+		if (parse ==null) {
+			System.out.println("La ejecución devolvió error, consulta el fichero de errores :)");
+		}
+		else {
 		aS.escribirTexto("D");
 		for(Integer ent: parse) {
 			aS.escribirTexto(""+ent);
+		}
 		}
 	}
 	private void escribirTexto(String string) {
