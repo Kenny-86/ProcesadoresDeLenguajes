@@ -45,12 +45,28 @@ public class GestorErrores {
 	public void error9(String leido, String esperado) {
 		escribirTexto("Error en la linea "+nLinea+": Error sintáctico: Se leyó el token "+ leido+ " pero se esperaba el token " +esperado+".");
 	}
-	public void error10() {
-		escribirTexto("Error en la linea "+nLinea+": Error sintáctico: Se esperaba un argumento para la función echo.");
+	public void errorK() {
+		escribirTexto("Error en la linea "+nLinea+" Error sintáctico: Se esperaba ',' seguido de otro parámetro, o ')' para cerrar la lista de parámetros");
 	}
 	
-	public void errorN(String token) {
-		escribirTexto("Error en la linea "+nLinea+": Error sintáctico: Se leyeron tokens sobrantes a partir del token "+token+".");
+	public void errorC() {
+		escribirTexto("Error en la linea "+nLinea+" Error sintáctico: Se esperaba una sentencia o '}' para cerrar el bloque");
+	}
+	
+	public void errorS() {
+		escribirTexto("Error en la linea "+nLinea+" Error sintáctico: Se esperaba una asignación, una llamada a función, echo, prompt o return");
+	}
+	
+	public void errorS1() {
+		escribirTexto("Error en la linea "+nLinea+" Error sintáctico: Se esperaba '='  o '('  después del identificador");
+	}
+	
+	public void errorExp() {
+		escribirTexto("Error en la linea "+nLinea+" Error sintáctico: Se esperaba una expresión (identificador, constante, operando,...)");
+	}
+	
+	public void errorPC() {
+		escribirTexto("Error en la linea "+nLinea+" Error sintáctico: Se esperaba fin de expresión");
 	}
 	private void escribirTexto(String string) {
 		try (FileWriter escritor = new FileWriter(fichero, true)) {
