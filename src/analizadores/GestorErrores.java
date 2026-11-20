@@ -47,16 +47,16 @@ public class GestorErrores {
 	}
 
 	public void errorP() {
-		escribirTexto("Error en la linea "+nLinea+": Error sintáctico: Se Se esparaba una sentencia o una declaración de función.");
+		escribirTexto("Error en la linea "+nLinea+": Error sintáctico: Se esperaba una sentencia o una declaración de función.");
 
 	}
 
 	public void errorB() {
-		escribirTexto("Error en la linea "+nLinea+": Error sintáctico: Se esperaba una sentencia.");
+		escribirTexto("Error en la linea "+nLinea+": Error sintáctico: Se esperaba una sentencia lógica o bucle.");
 
 	}
 	public void errorF() {
-		escribirTexto("Error en la linea "+nLinea+": Error sintáctico: Se esperaba declaración de funcion: function.");
+		escribirTexto("Error en la linea "+nLinea+": Error sintáctico: Se esperaba declaración de función: function.");
 
 	}
 	public void errorG() {
@@ -80,51 +80,47 @@ public class GestorErrores {
 
 	}
 	public void errorK() {
-		escribirTexto("Error en la linea "+nLinea+" Error sintáctico: Se esperaba ',' seguido de otro parámetro, o ')' para cerrar la lista de parámetros");
+		escribirTexto("Error en la linea "+nLinea+" Error sintáctico: Se esperaba ',' seguido de otro parámetro, o ')' para cerrar la lista de parámetros.");
 	}
 
 	public void errorC() {
-		escribirTexto("Error en la linea "+nLinea+" Error sintáctico: Se esperaba una sentencia o '}' para cerrar el bloque");
+		escribirTexto("Error en la linea "+nLinea+" Error sintáctico: Se esperaba una sentencia o '}' para cerrar el bloque.");
 	}
 
 	public void errorS() {
-		escribirTexto("Error en la linea "+nLinea+" Error sintáctico: Se esperaba una asignación, una llamada a función, echo, prompt o return");
+		escribirTexto("Error en la linea "+nLinea+" Error sintáctico: Se esperaba una asignación, una llamada a función, echo, prompt o return.");
 	}
 
 	public void errorS1() {
-		escribirTexto("Error en la linea "+nLinea+" Error sintáctico: Se esperaba '='  o '('  después del identificador");
+		escribirTexto("Error en la linea "+nLinea+" Error sintáctico: Se esperaba '='  o '('  después del identificador.");
 	}
 
 	public void errorExp() {
-		escribirTexto("Error en la linea "+nLinea+" Error sintáctico: Se esperaba una expresión (identificador, constante, operando,...)");
+		escribirTexto("Error en la linea "+nLinea+" Error sintáctico: Se esperaba una expresión (identificador, constante, operando,...).");
 	}
 
 	public void errorPC() {
-		escribirTexto("Error en la linea "+nLinea+" Error sintáctico: Se esperaba fin de expresión");
-	}
-
-	public void errorU1() {
-		escribirTexto("Error en la linea " +nLinea+ "Error sintáctico:Se esperaba '+' , '-' o el final de la expresión");
+		escribirTexto("Error en la linea "+nLinea+" Error sintáctico: Se esperaba fin de expresión.");
 	}
 
 	public void errorV1() {
-		escribirTexto("Error en la linea " +nLinea+ "Error sintáctico:Se esperaba un '(' para llamar a la función, o el final del operando");
+		escribirTexto("Error en la linea " +nLinea+ " Error sintáctico: Se esperaba un '(' para llamar a la función, o el final del operando.");
 	}
 
 	public void errorL() {
-		escribirTexto("Error en la linea " +nLinea+ "Error sintáctico:Se esperaban los argumentos de la función o ')' si no hay ninguno");
+		escribirTexto("Error en la linea " +nLinea+ " Error sintáctico: Se esperaban los argumentos de la función o ')' si no hay ninguno.");
 	}
 
 	public void errorQ() {
-		escribirTexto("Error en la linea " +nLinea+ "Error sintáctico:Se esperaba una ',' después de un argumento, o ')' para cerrar la llamada");
+		escribirTexto("Error en la linea " +nLinea+ " Error sintáctico: Se esperaba una ',' después de un argumento, o ')' para cerrar la llamada.");
 	}
 
 	public void errorX() {
-		escribirTexto("Error en la linea " +nLinea+ "Error sintáctico:Se esperaba la expresión a devolver o ';' si no devuelve nada");
+		escribirTexto("Error en la linea " +nLinea+ " Error sintáctico: Se esperaba la expresión a devolver o ';' si no devuelve nada.");
 	}
 
 	public void errorN(String token) {
-		escribirTexto("Error en la linea "+nLinea+": Error sintáctico: Se leyeron tokens sobrantes a partir del token "+token+".");
+		escribirTexto("Error en la linea "+nLinea+" : Error sintáctico: Se leyeron tokens sobrantes a partir del token "+token+".");
 	}
 
 	private void escribirTexto(String string) {

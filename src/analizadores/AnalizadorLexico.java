@@ -170,14 +170,14 @@ public class AnalizadorLexico {
 	}
 
 	public Token tokenStringReal() {
-        // Aqui pasamos a String pero podemos calcular el valor del real con la fórmula de  entero+realMath.pow(10, -contadorDecimal)
-        //String.format("%."+contadorDecimal+"f",(entero+realMath.pow(10, -contadorDecimal)) ).replace(',', '.');
-        Token tk=new Token("real", ""+entero+"."+real);
-        entero=0;
-        real = 0;
-        contadorDecimal = 0;
-        return tk;
-    }
+		// Aqui pasamos a String pero podemos calcular el valor del real con la fórmula de  entero+realMath.pow(10, -contadorDecimal)
+		//String.format("%."+contadorDecimal+"f",(entero+realMath.pow(10, -contadorDecimal)) ).replace(',', '.');
+		Token tk=new Token("real", ""+entero+"."+real);
+		entero=0;
+		real = 0;
+		contadorDecimal = 0;
+		return tk;
+	}
 
 	public Token tokenStringId(int posTS) {
 		lexema="";
@@ -222,7 +222,7 @@ public class AnalizadorLexico {
 		contadorDecimal=0;
 		longiCadena=0;
 	}
-	
+
 	public Token analisisL() {
 		Token tk = null;
 		while (cont< texto.size()) {
@@ -243,18 +243,18 @@ public class AnalizadorLexico {
 				cont++;
 			}
 			if(tk!=null) {
-			return tk;
+				return tk;
 			}
 		}
 
 		// Fin de fichero (columna 9). Puede hacer falta dos pasadas: la primera cierra el
 		// token pendiente (si lo hay) y la segunda emite el token eof.
 		columnaActual = 9;
-			String accionActual = acciones[estado][9];
-			int estadoSiguiente = transiciones[estado][9];
-			ejecutarAcciones(accionActual, ' ', gestorErr);
-			estado = (estadoSiguiente >= 12) ? 0 : estadoSiguiente;
-			//anl.ejecutarAcciones("GT17", ' ', gestorErr);
+		String accionActual = acciones[estado][9];
+		int estadoSiguiente = transiciones[estado][9];
+		ejecutarAcciones(accionActual, ' ', gestorErr);
+		estado = (estadoSiguiente >= 12) ? 0 : estadoSiguiente;
+		//anl.ejecutarAcciones("GT17", ' ', gestorErr);
 
 		escribirTabla(gestor, TS_Gestor.Tabla.GLOBAL);
 		return tokenStringPalabraReservada("eof") ;
@@ -266,10 +266,10 @@ public class AnalizadorLexico {
 		while(!tk.getCodToken().equals("eof")) {
 			aL.escribirTexto(tk.toString());
 			tk = aL.analisisL();
-			}
+		}
 		aL.escribirTexto(tk.toString());
 	}
-	
+
 
 	private static int obtenerColumna(char c) {
 		if (Character.isLetter(c)) return 0;
@@ -314,7 +314,7 @@ public class AnalizadorLexico {
 					reiniciarAcumuladores();
 				}
 				else {
-				return tokenStringEntero(); 
+					return tokenStringEntero(); 
 				}
 				break;
 			case "GT2":
@@ -323,7 +323,7 @@ public class AnalizadorLexico {
 					reiniciarAcumuladores();
 				}
 				else {
-				return tokenStringReal(); }
+					return tokenStringReal(); }
 				break;
 
 			case "GT3":
@@ -366,6 +366,6 @@ public class AnalizadorLexico {
 		}
 		return null;
 	}
-	
+
 
 }

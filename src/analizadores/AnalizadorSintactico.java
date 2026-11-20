@@ -23,7 +23,7 @@ public class AnalizadorSintactico {
 			// C
 			{"err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "B:C", "err", "err", "B:C", "err", "B:C", "B:C", "err", "B:C", "B:C", "err", "B:C", "err", "err", "err", "err", "err", "", "err"},
 			// D
-			{"err", "err", "err", "err", "err", "err", "", "=:U", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err"},
+			{"err", "err", "err", "err", "err", "err", "", "=:E", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err", "err"},
 			// E
 			{"R:E1", "err", "err", "R:E1", "err", "err", "err", "err", "err", "err", "R:E1", "err", "R:E1", "err", "err", "err", "R:E1", "err", "err", "err", "err", "R:E1", "err", "err", "R:E1", "err", "err", "err", "err", "err"},
 			// E1
@@ -113,7 +113,6 @@ public class AnalizadorSintactico {
 
 		while(!pila.peek().equals("$")) {
 			String tope = pila.peek();
-			System.out.println(tope);
 			int columna = traductorTerminales.get(token);
 			if (traductorTerminales.containsKey(tope)) { //el tope es terminal
 				pila.pop();
