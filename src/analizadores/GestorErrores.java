@@ -47,12 +47,12 @@ public class GestorErrores {
 	}
 
 	public void errorP() {
-		escribirTexto("Error en la linea "+nLinea+": Error sintáctico: Se esperaba una sentencia o una declaración de función.");
+		escribirTexto("Error en la linea "+nLinea+": Error sintáctico: Se esperaba una sentencia (función, condición, bucle, inicialización o declaración de variable) o una declaración de función.");
 
 	}
 
 	public void errorB() {
-		escribirTexto("Error en la linea "+nLinea+": Error sintáctico: Se esperaba una sentencia lógica o bucle.");
+		escribirTexto("Error en la linea "+nLinea+": Error sintáctico: Se esperaba una sentencia (función, condición, bucle, inicialización o declaración de variable).");
 
 	}
 	public void errorF() {
@@ -84,7 +84,7 @@ public class GestorErrores {
 	}
 
 	public void errorC() {
-		escribirTexto("Error en la linea "+nLinea+" Error sintáctico: Se esperaba una sentencia o '}' para cerrar el bloque.");
+		escribirTexto("Error en la linea "+nLinea+" Error sintáctico: Se esperaba una sentencia (función, condición, bucle, inicialización o declaración de variable) o '}' para cerrar el bloque.");
 	}
 
 	public void errorS() {
